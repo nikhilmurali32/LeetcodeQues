@@ -1,9 +1,9 @@
 class Solution {
     public int countCompleteSubarrays(int[] nums) {
         int n=nums.length;
-        HashMap<Integer, Integer> hmap = new HashMap<>();
+        HashSet<Integer> hset = new HashSet<>();
         for(int num:nums){
-            hmap.put(num, hmap.getOrDefault(num, 0)+1);
+            hset.add(num);
         }
         HashMap<Integer, Integer> hmap2 = new HashMap<>();
         int i=0;
@@ -14,7 +14,7 @@ class Solution {
             if(!check){
                 hmap2.put(nums[j], hmap2.getOrDefault(nums[j], 0)+1);
             }
-            if(hmap2.size()==hmap.size()){
+            if(hmap2.size()==hset.size()){
                 count += (n-j);
                 hmap2.put(nums[i], hmap2.get(nums[i])-1);
                 if(hmap2.get(nums[i])==0){
