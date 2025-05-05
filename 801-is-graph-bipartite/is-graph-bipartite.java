@@ -6,10 +6,8 @@ class Solution {
             color[i]=-1;
         }
         for(int i=0; i<n; i++){
-            for(int j=0; j<graph[i].length; j++){
-                if(color[graph[i][j]]==-1 && !helper(i, graph, color)){
-                    return false;
-                }
+            if(color[i]==-1 && !helper(i, graph, color)){
+                return false;
             }
         }
         return true;
@@ -22,7 +20,7 @@ class Solution {
             int node=q.remove();
             for(int i:graph[node]){
                 if(color[i]==-1){
-                    color[i] = 1-color[node];
+                    color[i]=1-color[node];
                     q.add(i);
                 }
                 else if(color[i]==color[node]){
