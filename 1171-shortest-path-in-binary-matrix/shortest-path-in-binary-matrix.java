@@ -17,7 +17,6 @@ class Solution {
                 List<Integer> list = q.poll();
                 int r=list.get(0);
                 int c=list.get(1);
-                vis[r][c]=true;
                 if(r==m-1 && c==n-1){
                     return steps;
                 }
