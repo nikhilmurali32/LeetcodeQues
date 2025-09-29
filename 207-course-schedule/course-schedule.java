@@ -3,12 +3,12 @@ class Solution {
         int[][] vis = new int[numCourses][numCourses];
         int[] inDegrees = new int[numCourses];
         for(int i=0; i<prerequisites.length; i++){
-            int pre=prerequisites[i][1];
             int curr=prerequisites[i][0];
-            if(vis[pre][curr]==0){
+            int prev=prerequisites[i][1];
+            if(vis[prev][curr]==0){
                 inDegrees[curr]++;
             }
-            vis[pre][curr]=1;
+            vis[prev][curr]=1;
         }
         Queue<Integer> q = new LinkedList<>();
         for(int i=0; i<numCourses; i++){
@@ -18,10 +18,10 @@ class Solution {
         }
         int count=0;
         while(!q.isEmpty()){
-            int curr=q.poll();
+            int ele = q.poll();
             count++;
             for(int i=0; i<numCourses; i++){
-                if(vis[curr][i]==1){
+                if(vis[ele][i]==1){
                     inDegrees[i]--;
                     if(inDegrees[i]==0){
                         q.add(i);
