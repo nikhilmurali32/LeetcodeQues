@@ -5,9 +5,7 @@ class Solution {
         for(int i=0; i<prerequisites.length; i++){
             int curr=prerequisites[i][0];
             int prev=prerequisites[i][1];
-            if(vis[prev][curr]==0){
-                inDegrees[curr]++;
-            }
+            inDegrees[curr]++;
             vis[prev][curr]=1;
         }
         Queue<Integer> q = new LinkedList<>();
