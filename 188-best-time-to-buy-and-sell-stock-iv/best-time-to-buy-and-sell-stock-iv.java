@@ -4,12 +4,14 @@ class Solution {
         int[][] dp = new int[k+1][n+1];
         dp[0][0]=0;
         for(int i=1; i<k+1; i++){
+            int min=Integer.MAX_VALUE;
             for(int j=1; j<n+1; j++){
-                int max=Integer.MIN_VALUE;;
-                for(int l=1; l<=j; l++){
-                    max=Math.max(max, prices[j-1]-prices[l-1]+dp[i-1][l]);
-                }
-                dp[i][j]=Math.max(dp[i][j-1], max);
+                // int max=Integer.MIN_VALUE;;
+                // for(int l=1; l<=j; l++){
+                //     max=Math.max(max, prices[j-1]-prices[l-1]+dp[i-1][l]);
+                // }
+                min = Math.min(min, prices[j-1]-dp[i-1][j]);
+                dp[i][j]=Math.max(dp[i][j-1], prices[j-1] - min);
             }
         }
         return dp[k][n];
