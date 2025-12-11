@@ -1,0 +1,15 @@
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        HashMap<Integer, Integer> hmap = new HashMap<>();
+        hmap.put(0, 1);
+        int sum=0, count=0;
+        for(int i=0; i<nums.length; i++){
+            sum += nums[i];
+            if(hmap.containsKey(sum-goal)){
+                count += hmap.get(sum-goal);
+            }
+            hmap.put(sum, hmap.getOrDefault(sum,0)+1);
+        }
+        return count;
+    }
+}
