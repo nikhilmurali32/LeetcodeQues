@@ -15,14 +15,15 @@ class Solution {
             return true;
         }
         vis[start]=true;
-        if(helper(arr, start+arr[start], vis)){
-            // done=true;
-            return true;
-        }
-        if(helper(arr, start-arr[start], vis)){
-            done=true;
-            return true;
-        }
-        return false;
+        // if(helper(arr, start+arr[start], vis)){
+        //     // done=true;
+        //     return true;
+        // }
+        // if(helper(arr, start-arr[start], vis)){
+        //     done=true;
+        //     return true;
+        // }
+        return helper(arr, start+arr[start], vis) || helper(arr, start-arr[start], vis);
+        // return false;
     }
 }
