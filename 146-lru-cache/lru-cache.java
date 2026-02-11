@@ -1,18 +1,22 @@
 class LRUCache {
     class Node{
-        Node prev, next;
+        Node prev;
+        Node next;
         int key, value;
-        Node(int _key, int _value){
-            this.key=_key;
-            this.value=_value;
+        Node(int key, int value){
+            // this.prev=prev;
+            // this.next=next;
+            this.key=key;
+            this.value=value;
         }
     }
-    HashMap<Integer, Node> hmap = new HashMap<>();
-    Node head = new Node(0,0);
-    Node tail = new Node(0,0);
-    int capacity;
-    public LRUCache(int _capacity) {
-        capacity=_capacity;
+    int n;
+    Node head=new Node(0,0);
+    Node tail=new Node(0,0);
+    HashMap<Integer, Node> hmap;
+    public LRUCache(int capacity) {
+        n=capacity;
+        hmap = new HashMap<>();
         head.next=tail;
         tail.prev=head;
     }
@@ -21,37 +25,38 @@ class LRUCache {
         if(!hmap.containsKey(key)){
             return -1;
         }
-        Node node=hmap.get(key);
-        remove(node);
-        insert(node);
-        return node.value;
+        Node temp = hmap.get(key);
+        remove(temp);
+        insert(temp);
+        return temp.value;
     }
     
     public void put(int key, int value) {
         Node node = new Node(key, value);
         if(hmap.containsKey(key)){
-            Node node1 = hmap.get(key);
+            Node node1=hmap.get(key);
             remove(node1);
         }
-        if(hmap.size()==capacity){
+        if(hmap.size()==n){
             remove(tail.prev);
         }
         insert(node);
+        
     }
     public void insert(Node node){
-        // Node node = hmap.get(key);
         hmap.put(node.key, node);
         Node temp=head.next;
         head.next=node;
         node.next=temp;
         node.prev=head;
         temp.prev=node;
+        return;
     }
     public void remove(Node node){
-        // Node node = hmap.get(key);
         hmap.remove(node.key);
         node.prev.next=node.next;
         node.next.prev=node.prev;
+
     }
 }
 
