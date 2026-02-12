@@ -1,26 +1,20 @@
 class Solution {
-    int m;
-    int n;
+    int prev_color;
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
-        m=image.length;
-        n=image[0].length;
-        boolean[][] vis = new boolean[m][n];
-        int rep = image[sr][sc];
-        dfs(image, sr, sc, color, vis, rep);
+        prev_color=image[sr][sc];
+        dfs(image, sr, sc, color);
         return image;
     }
-    public void dfs(int[][] image, int sr, int sc, int color, boolean[][] vis, int rep){
-        if(sr<0 || sr>m-1 || sc<0 || sc>n-1 || image[sr][sc]!=rep){
+    public void dfs(int[][] image, int sr, int sc, int color){
+        if(sr<0 || sr>image.length-1 || sc<0 || sc>image[0].length-1 || image[sr][sc]==color || image[sr][sc]!=prev_color){
             return;
         }
-        if(vis[sr][sc]){
-            return;
-        }
-        vis[sr][sc]=true;
+        // if(image[sr][sc]==prev_color){
         image[sr][sc]=color;
-        dfs(image, sr+1, sc, color, vis, rep);
-        dfs(image, sr, sc+1, color, vis, rep);
-        dfs(image, sr-1, sc, color, vis, rep);
-        dfs(image, sr, sc-1, color, vis, rep);
+        // }
+        dfs(image, sr, sc+1, color);
+        dfs(image, sr+1, sc, color);
+        dfs(image, sr, sc-1, color);
+        dfs(image, sr-1, sc, color);
     }
 }
