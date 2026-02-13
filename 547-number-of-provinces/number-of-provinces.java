@@ -4,7 +4,7 @@ class disjointSet{
     List<Integer> size = new ArrayList<>();
     int components;
     disjointSet(int n){
-        components=n;
+        // components=n;
         for(int i=0; i<n; i++){
             parent.add(i);
             size.add(1);
@@ -32,7 +32,7 @@ class disjointSet{
             parent.set(ulp_v, ulp_u);
             size.set(ulp_u, size.get(ulp_u)+size.get(ulp_v));
         }
-        components--;
+        // components--;
     }
 }
 class Solution {
@@ -49,6 +49,12 @@ class Solution {
                 }
             }
         }
-        return dis.components;
+        int count=0;
+        for(int i=0; i<isConnected.length; i++){
+            if(dis.parent.get(i)==i){
+                count++;
+            }
+        }
+        return count;
     }
 }
