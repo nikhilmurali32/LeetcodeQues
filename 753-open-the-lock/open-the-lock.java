@@ -35,11 +35,11 @@ class Solution {
             char old = arr[i];
 
             // turn forward
-            arr[i] = (char)((old - '0' + 1) % 10 + '0');
+            arr[i] = old=='9'?'0':(char)((int)old+1);
             res.add(new String(arr));
 
             // turn backward
-            arr[i] = (char)((old - '0' + 9) % 10 + '0');
+            arr[i] = old=='0'?'9':(char)((int)old-1);
             res.add(new String(arr));
 
             arr[i] = old;
