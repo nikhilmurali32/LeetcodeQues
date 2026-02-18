@@ -1,37 +1,37 @@
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
-        Map<Integer, List<int[]>> hmap = new HashMap<>();
-        for(int[] edge:times){
-            hmap.putIfAbsent(edge[0], new ArrayList<>());
-            hmap.get(edge[0]).add(new int[]{edge[1], edge[2]});
+        List<List<int[]>> adjList = new ArrayList<>();
+        for(int i=0; i<=n; i++){
+            adjList.add(new ArrayList<>());
         }
-    PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->(a[0]-b[0]));
-        boolean[] vis = new boolean[n+1];
-        int[] dis = new int[n+1];
-        dis[k]=0;
-        Arrays.fill(dis, Integer.MAX_VALUE);
-        pq.offer(new int[]{0,k});
-        int max=0;
+        for(int[] time:times){
+            adjList.get(time[0]).add(new int[]{time[1], time[2]});
+        }
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1]-b[1]);
+        pq.offer(new int[]{k, 0});
+        int[] dist = new int[n+1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[k]=0;
         while(!pq.isEmpty()){
-            int[] node = pq.poll();
-            int dist=node[0];
-            int elem=node[1];
-            if(vis[elem]){
+            int[] curr = pq.poll();
+            int node=curr[0];
+            int time=curr[1];
+            if(time>dist[node]){
                 continue;
             }
-            vis[elem]=true;
-            max=dist;
-            n--;
-            if(!hmap.containsKey(elem)){
-                continue;
-            }
-            for(int[] next:hmap.get(elem)){
-                if(!vis[next[0]] && dist+next[1]<dis[next[0]]){
-                    pq.offer(new int[]{dist+next[1], next[0]});
+            for(int[] nei:adjList.get(node)){
+                if(time+nei[1]<dist[nei[0]]){
+                    dist[nei[0]] = time+nei[1];
+                    pq.offer(new int[]{nei[0], nei[1]+time});
                 }
             }
-            
         }
-        return n==0?max:-1;
+        int max = 0;
+        for(int i = 1; i <= n; i++){
+            if(dist[i] == Integer.MAX_VALUE) return -1;
+            max = Math.max(max, dist[i]);
+        }
+        
+        return max;
     }
 }
