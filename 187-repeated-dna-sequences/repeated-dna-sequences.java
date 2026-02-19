@@ -6,20 +6,11 @@ class Solution {
             return new ArrayList<>();
         }
         String seq="";
-        for(int i=0; i<s.length(); i++){
-            seq += s.charAt(i);
-            if(seq.length()<10){
-                continue;
+        for(int i=0; i<s.length()-9; i++){
+            seq=s.substring(i, i+10);
+            if(!hset.add(seq)){
+                hset_list.add(seq);
             }
-            if(hset.contains(seq)){
-                if(!hset_list.contains(seq)){
-                    hset_list.add(seq);
-                }
-            }
-            else{
-                hset.add(seq);
-            }
-            seq=seq.substring(1, seq.length());
         }
         List<String> list = new ArrayList<>(hset_list);
         return list;
