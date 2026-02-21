@@ -10,7 +10,6 @@ class Solution {
             rev = rev*10 + rem;
             x=x/10;
         }
-        System.out.println(rev);
         return rev==num;
     }
 }
