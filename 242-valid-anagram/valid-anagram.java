@@ -6,23 +6,22 @@ class Solution {
         if(s.length()==0){
             return true;
         }
-        HashMap<Character, Integer> hmap = new HashMap<>();
+        HashSet<Character> hset = new HashSet<>();
+        int[] freq = new int[26];
         for(char ch:s.toCharArray()){
-            hmap.put(ch, hmap.getOrDefault(ch, 0)+1);
+            hset.add(ch);
+            freq[ch-'a']++;
         }
         int count=0;
         for(char ch:t.toCharArray()){
-            if(!hmap.containsKey(ch)){
+            if(freq[ch-'a']==0){
                 return false;
             }
-            hmap.put(ch, hmap.get(ch)-1);
-            if(hmap.get(ch)<0){
-                return false;
-            }
-            if(hmap.get(ch)==0){
+            freq[ch-'a']--;
+            if(freq[ch-'a']==0){
                 count++;
             }
         }
-        return count==hmap.size()?true:false;
+        return count==hset.size()?true:false;
     }
 }
