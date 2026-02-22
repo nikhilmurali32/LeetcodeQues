@@ -12,10 +12,10 @@ class Solution {
                 }
             }
         }
-        List<String> list = new ArrayList<>();
-        while(!q.isEmpty()){
-            list.add(q.poll());
-        }
+        List<String> list = new ArrayList<>(q);
+        // while(!q.isEmpty()){
+        //     list.add(q.poll());
+        // }
         return list;
 
     }
