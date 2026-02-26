@@ -1,12 +1,10 @@
 class Solution {
-    boolean[] seen;
     public int candy(int[] ratings) {
         int n=ratings.length;
         PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[1]-b[1]);
         for(int i=0; i<n; i++){
             pq.add(new int[]{i, ratings[i]});
         }
-        seen = new boolean[n];
         int[] candies = new int[n];
         Arrays.fill(candies, 1);
         int count=0;
@@ -31,7 +29,6 @@ class Solution {
                     candies[rightNei] = candies[rightNei]<=candies[minInd]?candies[minInd]+1:candies[rightNei];
                 }
             }
-            seen[minInd]=true;
             count++;
         }
         int sum=0;
