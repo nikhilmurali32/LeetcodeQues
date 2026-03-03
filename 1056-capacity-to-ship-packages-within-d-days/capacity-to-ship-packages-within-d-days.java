@@ -15,7 +15,6 @@ class Solution {
             else{
                 r=mid;
             }
-            System.out.println(mid);
         }
         return l;
     }
