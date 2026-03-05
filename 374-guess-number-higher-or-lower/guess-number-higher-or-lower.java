@@ -16,7 +16,7 @@ public class Solution extends GuessGame {
                 l=mid+1;
             }
             else if(guess(mid)==-1){
-                r=mid-1;
+                r=mid;
             }
             else{
                 return mid;
