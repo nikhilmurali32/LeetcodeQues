@@ -18,15 +18,11 @@ class Solution {
             return arr[l+1]<=k?k+1:k;
         }
         k=k-(arr[l]-(l+1));
-        System.out.println(k);
         int i=arr[l]+1;
-        System.out.println(i);
-        System.out.println(r);
         while(k>0){
             if(r<arr.length && arr[r]==i){
                 r++;
                 i++;
-                // k--;
                 continue;
             }
             i++;
