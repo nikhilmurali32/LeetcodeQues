@@ -3,7 +3,7 @@ class Solution {
         String str="";
         for(int i=0; i<s.length(); i++){
             str += s.charAt(i);
-            if(check(s, str)){
+            if(s.charAt(i)==s.charAt(s.length()-1) && check(s, str)){
                 return true;
             }
         }
