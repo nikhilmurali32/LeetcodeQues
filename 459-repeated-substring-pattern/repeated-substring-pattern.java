@@ -13,7 +13,7 @@ class Solution {
         int len=s.length();
         int n=str.length();
         int i=n;
-        if(i+n>len){
+        if(i+n>len || len%n!=0){
             return false;
         }
         while(i+n<=len){
