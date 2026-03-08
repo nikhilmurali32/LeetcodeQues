@@ -12,7 +12,6 @@ class Solution {
     public boolean check(String s, String str){
         int len=s.length();
         int n=str.length();
-        System.out.println(n);
         int i=n;
         if(i+n>len){
             return false;
