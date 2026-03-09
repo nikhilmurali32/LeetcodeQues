@@ -21,7 +21,7 @@ class Solution {
                 
             }
             else{
-                st.push(Integer.valueOf(c));
+                st.push(Integer.parseInt(c));
             }            
         }
         return st.pop();
