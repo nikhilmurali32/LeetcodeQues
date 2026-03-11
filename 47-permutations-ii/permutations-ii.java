@@ -9,9 +9,7 @@ class Solution {
     }
     public void helper(int[] nums, List<Integer> op, boolean[] b){
         if(op.size()==n){
-            if(!list.contains(new ArrayList<>(op))){
-                list.add(new ArrayList<>(op));
-            }
+            list.add(new ArrayList<>(op));
             return;
         }
         for(int i=0; i<n; i++){
