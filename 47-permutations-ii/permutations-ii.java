@@ -18,6 +18,9 @@ class Solution {
             if(b[i]){
                 continue;
             }
+            if(i>0 && nums[i]==nums[i-1] && b[i-1]){
+                continue;
+            }
             op.add(nums[i]);
             b[i]=true;
             helper(nums, op, b);
