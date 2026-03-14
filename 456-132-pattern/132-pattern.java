@@ -10,21 +10,6 @@ class Solution {
             }
             min=Math.min(min, nums[i]);
         }
-
-        // Deque<Integer> dq = new ArrayDeque<>();
-        // dq.addLast(nums[n-1]);
-        // for(int i=n-2; i>=0; i--){
-        //     if(!dq.isEmpty() && nums[i]>dq.front()){
-        //         dq.addFirst(nums[i]);
-        //     }
-        //     else{
-        //         while(nums[i]>dq.front()){
-        //             temp=dq.removeFirst();
-        //         }
-        //         dq.addLast(nums[i]);
-        //     }
-        //     st.push(nums[i]);
-        // }
         TreeSet<Integer> treeSet = new TreeSet<>();
         for(int i=n-1; i>=0; i--){
             if(treeSet.lower(nums[i]) != null && treeSet.lower(nums[i]) > min_left[i]){
