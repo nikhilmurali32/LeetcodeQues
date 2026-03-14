@@ -2,14 +2,14 @@ class Solution {
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
         Stack<Integer> st = new Stack<>();
         HashMap<Integer, Integer> hmap = new HashMap<>();
-        for(int num:nums2){
-            while(!st.isEmpty() && st.peek()<num){
-                hmap.put(st.pop(), num);
+        for(int i=0; i<nums2.length; i++){
+            while(!st.isEmpty() && nums2[i]>nums2[st.peek()]){
+                hmap.put(nums2[st.pop()], nums2[i]);
             }
-            st.push(num);
+            st.push(i);
         }
         for(int i=0; i<nums1.length; i++){
-            nums1[i]=hmap.getOrDefault(nums1[i], -1);
+            nums1[i]=hmap.get(nums1[i])==null?-1:hmap.get(nums1[i]);
         }
         return nums1;
     }
