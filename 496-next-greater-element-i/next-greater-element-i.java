@@ -9,7 +9,7 @@ class Solution {
             st.push(i);
         }
         for(int i=0; i<nums1.length; i++){
-            nums1[i]=hmap.get(nums1[i])==null?-1:hmap.get(nums1[i]);
+            nums1[i]=hmap.getOrDefault(nums1[i], -1);
         }
         return nums1;
     }
