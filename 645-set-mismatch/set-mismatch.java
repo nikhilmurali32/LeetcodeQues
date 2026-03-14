@@ -1,11 +1,12 @@
 class Solution {
     public int[] findErrorNums(int[] nums) {
         int n=nums.length;
-        Arrays.sort(nums);
+        // Arrays.sort(nums);
+        HashSet<Integer> hset = new HashSet<>();
         int[] res= new int[2];
-        int sum=nums[0];
-        for(int i=1; i<n; i++){
-            if(nums[i-1]==nums[i]){
+        int sum=0;
+        for(int i=0; i<n; i++){
+            if(!hset.add(nums[i])){
                 res[0]=nums[i];
             }
             sum+=nums[i];
