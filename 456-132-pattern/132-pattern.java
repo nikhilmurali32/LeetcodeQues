@@ -1,9 +1,8 @@
 class Solution {
     public boolean find132pattern(int[] nums) {
         Deque<Integer> dq = new ArrayDeque<>();
-        int n=nums.length;
         int third=Integer.MIN_VALUE;
-        for(int i=n-1; i>=0; i--){
+        for(int i=nums.length-1; i>=0; i--){
             if(nums[i]<third){
                 return true;
             }
