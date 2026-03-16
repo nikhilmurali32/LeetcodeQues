@@ -9,9 +9,6 @@ class Solution {
         for(char ch:s.toCharArray()){
             if(!hset.add(ch)){
                 char dup = ch;
-                if(hset.size()>max){
-                    max=hset.size();
-                }
                 while(s.charAt(start)!=dup){
                     hset.remove(s.charAt(start));
                     start++;
