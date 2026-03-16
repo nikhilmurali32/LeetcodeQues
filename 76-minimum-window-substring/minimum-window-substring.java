@@ -6,8 +6,8 @@ class Solution {
         }
         int count = hmap_t.size();
         int i=0, j=0;
-        String res="";
         int min=Integer.MAX_VALUE;
+        int startInd=0;
         while(j<s.length()){
             char ch=s.charAt(j);
             if(hmap_t.containsKey(ch)){
@@ -20,7 +20,7 @@ class Solution {
             while(count==0){
                 if((j-i)<min){
                     min=j-i;
-                    res=s.substring(i, j);
+                    startInd=i;
                 }
                 char start=s.charAt(i);
                 if(hmap_t.containsKey(start)){
@@ -32,6 +32,9 @@ class Solution {
                 i++;
             }
         }
-        return res;
+        if(min==Integer.MAX_VALUE){
+            return "";
+        }
+        return s.substring(startInd, startInd+min);
     }
 }
