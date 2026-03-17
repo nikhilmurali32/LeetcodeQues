@@ -16,23 +16,18 @@
 class Solution {
     int count=0;
     public int goodNodes(TreeNode root) {
-        helper(root, new ArrayDeque<>());
+        helper(root, root.val);
         return count;
     }
-    public void helper(TreeNode root, Deque<Integer> dq){
+    public void helper(TreeNode root, int maxSofar){
         if(root==null){
             return;
         }
-        boolean seen=false;
-        if(dq.isEmpty() || root.val>=dq.peekLast()){
-            dq.addLast(root.val);
-            seen=true;
+        if(root.val>=maxSofar){
             count++;
         }
-        helper(root.left, dq);
-        helper(root.right, dq);
-        if(seen){
-            dq.removeLast();
-        }
+        int max=Math.max(maxSofar, root.val);
+        helper(root.left, max);
+        helper(root.right, max);
     }
 }
