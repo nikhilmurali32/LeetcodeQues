@@ -1,27 +1,14 @@
 class Solution {
     public int reverse(int x) {
-        if(x==0 || x==-2147483648){
-            return 0;
-        }
-        boolean neg=false;
-        if(x<0){
-            x=x*-1;
-            neg=true;
-        }
-        String s="";
-        while(x>0){
-            s += String.valueOf(x%10);
+        int sum=0;
+        while(x!=0){
+            if(sum<Integer.MIN_VALUE/10 || sum>Integer.MAX_VALUE/10){
+                return 0;
+            }
+            int temp=x%10;
+            sum = sum*10 + temp;
             x=x/10;
         }
-
-        long res=Long.parseLong(s);
-        if(res>Integer.MAX_VALUE){
-            return 0;
-        }
-        if(neg){
-            res = res*-1;
-        }
-        return (int)res;
-
+        return sum;
     }
 }
