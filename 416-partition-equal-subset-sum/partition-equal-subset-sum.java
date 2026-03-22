@@ -1,34 +1,44 @@
 class Solution {
-    Boolean[][] dp;
     public boolean canPartition(int[] nums) {
-        int sum=0;
+        int n=nums.length;
+        int target=0;
         for(int num:nums){
-            sum += num;
+            target += num;
         }
-        if(sum%2 != 0){
+        if(target%2 != 0){
             return false;
         }
-        Arrays.sort(nums);
-        int target = sum/2;
-        dp = new Boolean[nums.length+1][target+1];
-        dp[0][0]=true;
-        return helper(nums, 0, target);
+        target=target/2;
+        int[][] dp = new int[n][target+1];
+        for(int[] arr:dp){
+            Arrays.fill(arr, -1);
+        }
+        return doesExist(nums, target, n-1, dp)==1?false:true;
     }
-    public boolean helper(int[] nums, int ind, int target){
-        if(target<0){
-            return false;
-        }
+    public int doesExist(int[] nums, int target, int ind, int[][] dp){
         if(target==0){
-            return dp[ind][target] = true;
+            return dp[ind][target]=0;
         }
-        if(dp[ind][target] != null){
+        if(dp[ind][target] != -1){
             return dp[ind][target];
         }
-        for(int i=ind; i<nums.length; i++){
-            if(nums[i]<=target){
-                return dp[ind][target] = (helper(nums, ind+1, target) || helper(nums, i+1, target-nums[i]));
+        if(ind==0){
+            if(target==nums[ind]){
+                dp[ind][target]=0;
             }
+            else{
+                dp[ind][target]=1;
+            }
+            return dp[ind][target];
         }
-        return dp[ind][target] = false;
+        int doNotTake = doesExist(nums, target, ind-1, dp);
+        int take=1;
+        if(target>=nums[ind]){
+            take = doesExist(nums, target-nums[ind], ind-1, dp);
+        }
+        if(doNotTake==0 || take==0){
+            return dp[ind][target]=0;
+        }
+        return dp[ind][target]=1;
     }
 }
