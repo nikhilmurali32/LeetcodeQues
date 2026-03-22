@@ -17,12 +17,12 @@ class Solution {
                     dp[i][j]=true;
                 }
                 else{
-                    boolean doNotTake = dp[i-1][j];
-                    boolean take=false;
                     if(j>=nums[i-1]){
-                        take = dp[i-1][j-nums[i-1]];
+                        dp[i][j] = dp[i-1][j-nums[i-1]] || dp[i-1][j];
                     }
-                    dp[i][j] = doNotTake || take;
+                    else{
+                        dp[i][j] = dp[i-1][j];
+                    }
                 }
             }
         }
