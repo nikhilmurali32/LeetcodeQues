@@ -5,7 +5,6 @@ class Solution {
         for(int num:nums){
             sum += num;
         }
-        int tot=(n*(n+1))/2;
-        return tot-sum;
+        return ((n*(n+1))/2)-sum;
     }
 }
