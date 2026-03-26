@@ -6,17 +6,14 @@ class Solution {
         int i=n-1;
         while(l<=r){
             if(Math.abs(nums[l])>=Math.abs(nums[r])){
-                newNums[i]=nums[l];
+                newNums[i]=nums[l]*nums[l];
                 l++;
             }
             else{
-                newNums[i]=nums[r];
+                newNums[i]=nums[r]*nums[r];
                 r--;
             }
             i--;
-        }
-        for(int j=0; j<n; j++){
-            newNums[j] *=newNums[j];
         }
         return newNums;
     }
