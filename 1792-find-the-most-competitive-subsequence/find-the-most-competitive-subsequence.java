@@ -1,29 +1,21 @@
 class Solution {
     public int[] mostCompetitive(int[] nums, int k) {
-        int n=nums.length;
-        if(n==k){
-            return nums;
-        }
-        int rem=n-k;
+        Deque<Integer> compSubs = new ArrayDeque<>();
         int i=0;
-        Stack<Integer> st = new Stack<>();
+        int j=0;
+        int n=nums.length;
+        int[] res = new int[k];
         while(i<n){
-            while(rem>0 && !st.isEmpty() && st.peek()>nums[i]){
-                System.out.println(st.pop());
-                rem--;
+            while(!compSubs.isEmpty() && nums[i]<nums[compSubs.peekLast()]){
+                compSubs.removeLast();
             }
-            st.push(nums[i]);
+            compSubs.addLast(i);
+            if(i==n-k+j){
+                res[j]=nums[compSubs.removeFirst()];
+                j++;
+            }
             i++;
         }
-        int[] ans = new int[k];
-        int j=k-1;
-        while(st.size()!=k){
-            st.pop();
-        }
-        while(j>=0 && !st.isEmpty()){
-            ans[j]=st.pop();
-            j--;
-        }
-        return ans;
+        return res;
     }
 }
