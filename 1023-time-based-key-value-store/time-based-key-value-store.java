@@ -31,14 +31,22 @@ class TimeMap {
         if(posArr.size()==0){
             return "";
         }
-        int i=posArr.size()-1;
-        while(i>=0 && timestamp < posArr.get(i)){
-            i--;
+        int l=0, r=posArr.size()-1;
+        int res=-1;
+        while(l<=r){
+            int mid = l + (r-l)/2;
+            if(timestamp >= posArr.get(mid)){
+                res=mid;
+                l=mid+1;
+            }
+            else{
+                r=mid-1;
+            }
         }
-        if(i==-1){
+        if(res<=-1 || timestamp<posArr.get(res)){
             return "";
         }
-        String findKey = key + "," + String.valueOf(posArr.get(i));
+        String findKey = key + "," + String.valueOf(posArr.get(res));
         if(hmap.containsKey(findKey)){
             return hmap.get(findKey);
         }
