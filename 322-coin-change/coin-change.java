@@ -7,12 +7,12 @@ class Solution {
         }
         for(int i=1; i<=coins.length; i++){
             for(int j=1; j<=amount; j++){
-                int doNotTake = dp[i-1][j];
-                int take = 100000;
                 if(coins[i-1]<=j){
-                    take = 1 + dp[i][j-coins[i-1]];
+                    dp[i][j] = Math.min(dp[i-1][j], 1 + dp[i][j-coins[i-1]]);
                 }
-                dp[i][j] = Math.min(doNotTake, take);
+                else{
+                    dp[i][j] = dp[i-1][j];
+                }
             }
         }
         return dp[n][amount]==100000?-1:dp[n][amount];
