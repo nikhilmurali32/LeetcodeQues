@@ -31,6 +31,9 @@ class Solution {
                 return true;
             }
             vis[i]=false;
+            if(currentSum==0){
+                break;
+            }
         }
         return false;
     }
