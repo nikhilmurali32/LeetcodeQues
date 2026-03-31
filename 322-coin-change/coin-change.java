@@ -4,6 +4,7 @@ class Solution {
         for(int[] arr:dp){
             Arrays.fill(arr, -1);
         }
+        Arrays.sort(coins);
         int ans=helper(coins, amount, coins.length-1, dp);
         return ans==100000?-1:ans;
     }
