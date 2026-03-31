@@ -1,7 +1,6 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
-        int n=coins.length;
-        int[][] dp = new int[n+1][amount+1];
+        int[][] dp = new int[coins.length+1][amount+1];
         for(int j=1; j<=amount; j++){
             dp[0][j] = 100000;
         }
@@ -15,6 +14,6 @@ class Solution {
                 }
             }
         }
-        return dp[n][amount]==100000?-1:dp[n][amount];
+        return dp[coins.length][amount]==100000?-1:dp[coins.length][amount];
     }
 }
