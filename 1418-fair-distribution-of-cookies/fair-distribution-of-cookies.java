@@ -23,6 +23,9 @@ class Solution {
             children[i] += cookies[ind];
             helper(cookies, ind-1, children, k);
             children[i] -= cookies[ind];
+            if(children[i]==0){
+                break;
+            }
         }
     }
 }
