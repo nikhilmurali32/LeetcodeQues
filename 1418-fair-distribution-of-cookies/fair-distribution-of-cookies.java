@@ -1,7 +1,7 @@
 class Solution {
     int minUnf;
     public int distributeCookies(int[] cookies, int k) {
-        // Arrays.sort(cookies);
+        Arrays.sort(cookies);
         minUnf = Integer.MAX_VALUE;
         int n=cookies.length;
         int[] children = new int[k];
