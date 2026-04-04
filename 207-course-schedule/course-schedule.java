@@ -1,40 +1,39 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<List<Integer>> adjList = new ArrayList<>();
-        for(int i=0; i<numCourses; i++){
+        List<List<Integer>> adjList = new ArrayList<>(numCourses);
+        for (int i = 0; i < numCourses; i++) {
             adjList.add(new ArrayList<>());
         }
-        for(int[] preReq:prerequisites){
-            adjList.get(preReq[1]).add(preReq[0]);
-        }
         int[] inDegrees = new int[numCourses];
-        for(int i=0; i<inDegrees.length; i++){
-            for(int j:adjList.get(i)){
-                inDegrees[j]++;
-            }
+        for(int[] pre:prerequisites){
+            adjList.get(pre[0]).add(pre[1]);
+            inDegrees[pre[1]]++;
         }
-        Queue<Integer> q = new LinkedList<>();
-        for(int i=0; i<inDegrees.length; i++){
+        Queue<Integer> canTake = new LinkedList<>();
+        int count=0;
+        for(int i=0; i<numCourses; i++){
             if(inDegrees[i]==0){
-                q.add(i);
+                count++;
+                canTake.add(i);
             }
         }
-        if(q.isEmpty()){
+        System.out.println(count);
+        if(count==0){
             return false;
         }
-        int count=0;
-        while(!q.isEmpty()){
-            count++;
-            for(int nei:adjList.get(q.poll())){
-                // if(vis[nei]){
-                //     return false;
-                // }
-                inDegrees[nei]--;
-                if(inDegrees[nei]==0){
-                    q.offer(nei);
+        while(!canTake.isEmpty()){
+            int course = canTake.remove();
+            for(int i=0; i<adjList.get(course).size(); i++){
+                inDegrees[adjList.get(course).get(i)]--;
+                if(inDegrees[adjList.get(course).get(i)]==0){
+                    count++;
+                    canTake.add(adjList.get(course).get(i));
                 }
             }
+            if(count==numCourses){
+                return true;
+            }
         }
-        return count==numCourses;
+        return false;
     }
 }
