@@ -17,9 +17,6 @@ class Solution {
                 canTake.add(i);
             }
         }
-        if(count==0){
-            return false;
-        }
         while(!canTake.isEmpty()){
             for(int i:adjList.get(canTake.remove())){
                 inDegrees[i]--;
@@ -28,10 +25,7 @@ class Solution {
                     canTake.add(i);
                 }
             }
-            if(count==numCourses){
-                return true;
-            }
         }
-        return false;
+        return count==numCourses;
     }
 }
