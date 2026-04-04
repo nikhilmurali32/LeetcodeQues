@@ -29,10 +29,7 @@ class Solution {
                     canTake.add(adjList.get(course).get(i));
                 }
             }
-            if(count==numCourses){
-                return true;
-            }
         }
-        return false;
+        return count==numCourses;
     }
 }
