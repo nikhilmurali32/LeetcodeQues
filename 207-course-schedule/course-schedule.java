@@ -17,7 +17,6 @@ class Solution {
                 canTake.add(i);
             }
         }
-        System.out.println(count);
         if(count==0){
             return false;
         }
