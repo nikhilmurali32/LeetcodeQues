@@ -22,14 +22,17 @@ class Solution {
         }
         while(!canTake.isEmpty()){
             int course = canTake.remove();
-            for(int i=0; i<adjList.get(course).size(); i++){
-                inDegrees[adjList.get(course).get(i)]--;
-                if(inDegrees[adjList.get(course).get(i)]==0){
+            for(int i:adjList.get(course)){
+                inDegrees[i]--;
+                if(inDegrees[i]==0){
                     count++;
-                    canTake.add(adjList.get(course).get(i));
+                    canTake.add(i);
                 }
             }
+            if(count==numCourses){
+                return true;
+            }
         }
-        return count==numCourses;
+        return false;
     }
 }
