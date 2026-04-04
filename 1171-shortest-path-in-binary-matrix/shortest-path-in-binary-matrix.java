@@ -1,46 +1,34 @@
 class Solution {
     public int shortestPathBinaryMatrix(int[][] grid) {
-        int m=grid.length;
-        int n=grid[0].length;
+        int m=grid.length, n=grid[0].length;
+        Queue<int[]> zeroIndices = new LinkedList<>();
         if(grid[0][0]==1 || grid[m-1][n-1]==1){
             return -1;
         }
-        Queue<List<Integer>> q = new LinkedList<>();
-        q.add(new ArrayList<>(Arrays.asList(0,0)));
-        int[] row = new int[]{-1,0,1};
-        int[] col = new int[]{-1,0,1};
-        boolean[][] vis = new boolean[m][n];
-        int steps=1;
-        while(!q.isEmpty()){
-            int size=q.size();
+        zeroIndices.add(new int[]{0,0});
+        int count=0;
+        boolean[][] visited = new boolean[m][n];
+        visited[0][0]=true;
+        while(!zeroIndices.isEmpty()){
+            int size = zeroIndices.size();
             for(int i=0; i<size; i++){
-                List<Integer> list = q.poll();
-                int r=list.get(0);
-                int c=list.get(1);
-                if(r==m-1 && c==n-1){
-                    return steps;
+                int[] ind = zeroIndices.remove();
+                int x=ind[0], y=ind[1];
+                if(x==m-1 && y==n-1){
+                    count++;
+                    return count;
                 }
-                for(int ro:row){
-                    for(int co:col){
-                        if(ro==0 && co==0){
+                for(int k=-1; k<=1; k++){
+                    for(int j=-1; j<=1; j++){
+                        if((k==0 && j==0) || x+k<0 || y+j<0 || x+k>=m || y+j>=n || grid[x+k][y+j]==1 || visited[x+k][y+j]){
                             continue;
                         }
-                        int rowInd=r+ro;
-                        int colInd=c+co;
-                        if(rowInd<0 || colInd<0 || rowInd>m-1 || colInd>n-1 || vis[rowInd][colInd]){
-                            continue;
-                        }
-                        if(grid[rowInd][colInd]==0){
-                            List<Integer> tempList = new ArrayList<>();
-                            tempList.add(rowInd);
-                            tempList.add(colInd);
-                            q.add(tempList);
-                            vis[rowInd][colInd]=true;
-                        }
+                        visited[x+k][y+j]=true;
+                        zeroIndices.add(new int[]{x+k, y+j});
                     }
                 }
             }
-            steps++;
+            count++;
         }
         return -1;
     }
