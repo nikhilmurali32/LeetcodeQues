@@ -6,8 +6,8 @@ class Solution {
         }
         int[] inDegrees = new int[numCourses];
         for(int[] pre:prerequisites){
-            adjList.get(pre[0]).add(pre[1]);
-            inDegrees[pre[1]]++;
+            adjList.get(pre[1]).add(pre[0]);
+            inDegrees[pre[0]]++;
         }
         Queue<Integer> canTake = new LinkedList<>();
         int count=0;
