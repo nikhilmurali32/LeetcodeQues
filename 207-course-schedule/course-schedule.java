@@ -25,7 +25,10 @@ class Solution {
                     canTake.add(i);
                 }
             }
+            if(count==numCourses){
+                return true;
+            }
         }
-        return count==numCourses;
+        return false;
     }
 }
