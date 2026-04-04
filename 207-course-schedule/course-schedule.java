@@ -21,8 +21,7 @@ class Solution {
             return false;
         }
         while(!canTake.isEmpty()){
-            int course = canTake.remove();
-            for(int i:adjList.get(course)){
+            for(int i:adjList.get(canTake.remove())){
                 inDegrees[i]--;
                 if(inDegrees[i]==0){
                     count++;
