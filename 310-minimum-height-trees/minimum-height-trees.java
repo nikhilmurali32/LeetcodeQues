@@ -5,9 +5,9 @@ class Solution {
             l.add(0);
             return l;
         }
-        List<HashSet<Integer>> adjList = new ArrayList<>();
+        List<List<Integer>> adjList = new ArrayList<>();
         for(int i=0; i<n; i++){
-            adjList.add(new HashSet<>());
+            adjList.add(new ArrayList<>());
         }
         int[][] inDegrees = new int[n][2];
         for(int[] edge:edges){
@@ -25,7 +25,7 @@ class Solution {
             rem -= leaves.size();
             List<Integer> newLeaves = new ArrayList<>();
             for(int i=0; i<leaves.size(); i++){
-                int nei = adjList.get(leaves.get(i)).iterator().next();
+                int nei = adjList.get(leaves.get(i)).get(0);
                 adjList.get(nei).remove(leaves.get(i));
                 if(adjList.get(nei).size()==1){
                     newLeaves.add(nei);
