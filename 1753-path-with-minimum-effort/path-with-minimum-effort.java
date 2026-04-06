@@ -15,6 +15,9 @@ class Solution {
             int[] currCell = leastEffort.remove();
             int currDist = currCell[2];
             int i=currCell[0], j=currCell[1];
+            if(currDist>minDistance[i][j]){
+                continue;
+            }
             max=Math.max(max, currDist);
             if(i==m-1 && j==n-1){
                 res=max;
