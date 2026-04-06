@@ -13,6 +13,9 @@ class Solution {
             int[] currCell = minHeight.remove();
             int i = currCell[0], j = currCell[1];
             int currMax = currCell[2];
+            if(currMax>minCellHeight[i][j]){
+                continue;
+            }
             if(i==m-1 && j==n-1){
                 res=currMax;
                 break;
