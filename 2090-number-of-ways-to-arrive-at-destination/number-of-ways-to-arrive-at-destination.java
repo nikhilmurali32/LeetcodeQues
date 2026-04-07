@@ -1,38 +1,39 @@
 class Solution {
     public int countPaths(int n, int[][] roads) {
-        if(roads.length==0){
-            return 1;
+        List<List<long[]>> adjList = new ArrayList<>();
+        for(int i=0; i<n; i++){
+            adjList.add(new ArrayList<>());
         }
-        Map<Integer, List<int[]>> graph = new HashMap<>();
-        final int MOD = 1_000_000_007;
         for(int[] road:roads){
-            graph.putIfAbsent(road[0], new ArrayList<>());
-            graph.putIfAbsent(road[1], new ArrayList<>());
-            graph.get(road[0]).add(new int[]{road[1], road[2]});
-            graph.get(road[1]).add(new int[]{road[0], road[2]});
+            adjList.get(road[0]).add(new long[]{road[1], road[2]});
+            adjList.get(road[1]).add(new long[]{road[0], road[2]});
         }
-        PriorityQueue<long[]> pq = new PriorityQueue<>((a,b)->Long.compare(a[1], b[1]));
-        pq.offer(new long[]{0, 0});
-        long[] dis = new long[n+1];
-        Arrays.fill(dis, Long.MAX_VALUE);
-        dis[0]=0;
-        int[] ways = new int[n];
-        ways[0] = 1;
-        while(!pq.isEmpty()){
-            long[] curr = pq.poll();
-            int currNode = (int)curr[0];
-            long dist = curr[1];
-            for(int[] edge:graph.get(currNode)){
-                if (dist + edge[1] < dis[edge[0]]) {
-                    dis[edge[0]] = dist + edge[1];
-                    pq.offer(new long[]{edge[0], dis[edge[0]]});
-                    ways[edge[0]] = ways[currNode];
-                } 
-                else if (dist + edge[1] == dis[edge[0]]) {
-                    ways[edge[0]] = (int)(ways[edge[0]] + (long) ways[currNode]) % MOD;
+        long[] minTimetoReach = new long[n];
+        Arrays.fill(minTimetoReach, Long.MAX_VALUE);
+        PriorityQueue<long[]> leastTime = new PriorityQueue<>((a, b) -> Long.compare(a[1], b[1]));
+        leastTime.add(new long[]{0, 0});
+        long minLastNodeTime=Long.MAX_VALUE;
+        long[] ways = new long[n];
+        ways[0]=1;
+        long MOD = 7+1000000000;
+        while(!leastTime.isEmpty()){
+            long[] currNode = leastTime.remove();
+            int node = (int)currNode[0];
+            long time = currNode[1];
+            if(minTimetoReach[node]<time){
+                continue;
+            }
+            for(long[] nei:adjList.get(node)){
+                if(time+nei[1] < minTimetoReach[(int)nei[0]]){
+                    minTimetoReach[(int)nei[0]] = time+nei[1];
+                    leastTime.add(new long[]{nei[0], time+nei[1]});
+                    ways[(int)nei[0]]=ways[node];
+                }
+                else if(time+nei[1] == minTimetoReach[(int)nei[0]]){
+                    ways[(int)nei[0]] = (ways[(int)nei[0]] + ways[node])%MOD;
                 }
             }
         }
-        return ways[n - 1];
+        return (int)ways[n-1];
     }
 }
