@@ -17,7 +17,9 @@ class Solution {
             double[] currNode = maxProb.remove();
             int node = (int)currNode[0];
             double prob = currNode[1];
-
+            if(prob < maxProbArr[node]){
+                continue;
+            }
             for(double[] nei:adjList.get(node)){
                 if(prob*nei[1] > maxProbArr[(int)nei[0]]){
                     maxProbArr[(int)nei[0]] = prob*nei[1];
