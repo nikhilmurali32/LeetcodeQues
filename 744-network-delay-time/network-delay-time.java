@@ -17,6 +17,9 @@ class Solution {
             int[] currNode = leastTime.remove();
             int node = currNode[0];
             int time = currNode[1];
+            if(time>totalTime[node]){
+                continue;
+            }
             for(int[] nei:adjList.get(node)){
                 if(time + nei[1] < totalTime[nei[0]]){
                     totalTime[nei[0]] = time + nei[1];
