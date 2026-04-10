@@ -8,9 +8,9 @@
  * }
  */
 class Solution {
-    List<TreeNode> op_p;
-    List<TreeNode> op_q;
     int count=0;
+    List<TreeNode> op_p = new ArrayList<>();
+    List<TreeNode> op_q = new ArrayList<>();
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if(root==null){
             return null;
@@ -20,12 +20,10 @@ class Solution {
         }
         List<TreeNode> op = new ArrayList<>();
         if(root.val==p.val){
-            op_p = new ArrayList<>(op);
             op_p.add(root);
             count++;
         }
         if(root.val==q.val){
-            op_q = new ArrayList<>(op);
             op_q.add(root);
             count++;
         }
@@ -43,7 +41,6 @@ class Solution {
         if(node==null || count==2){
             return;
         }
-        // System.out.println(node.val);
         if(node.val==p.val){
             op_p = new ArrayList<>(op);
             op_p.add(node);
