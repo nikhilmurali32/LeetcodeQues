@@ -8,56 +8,34 @@
  * }
  */
 class Solution {
-    int count=0;
-    List<TreeNode> op_p = new ArrayList<>();
-    List<TreeNode> op_q = new ArrayList<>();
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if(root==null){
             return null;
         }
-        if(root.val==p.val && root.val==q.val){
-            return root;
-        }
-        List<TreeNode> op = new ArrayList<>();
-        if(root.val==p.val){
-            op_p.add(root);
-            count++;
-        }
-        if(root.val==q.val){
-            op_q.add(root);
-            count++;
-        }
-        op.add(root);
-        dfs(root.left, op, p, q);
-        dfs(root.right, op, p, q);
+        List<TreeNode> pathP = new ArrayList<>();
+        List<TreeNode> pathQ = new ArrayList<>();
+        dfs(root, p, pathP);
+        dfs(root, q, pathQ);
         int i=0;
-        while(i<Math.min(op_p.size(), op_q.size()) && op_p.get(i).val==op_q.get(i).val){
+        while(i<Math.min(pathP.size(), pathQ.size()) && pathP.get(i).val==pathQ.get(i).val){
             i++;
         }
-        return op_p.get(i-1);
+        return pathP.get(i-1);
 
     }
-    public void dfs(TreeNode node, List<TreeNode> op, TreeNode p, TreeNode q){
-        if(node==null || count==2){
-            return;
+    public boolean dfs(TreeNode node, TreeNode k, List<TreeNode> path){
+        if(node==null){
+            return false;
         }
-        if(node.val==p.val){
-            op_p = new ArrayList<>(op);
-            op_p.add(node);
-            count++;
-        }
-        if(node.val==q.val){
-            op_q = new ArrayList<>(op);
-            op_q.add(node);
-            count++;
-        }
-        if(count==2){
-            return;
+        path.add(node);
+        if(node.val==k.val){
+            return true;
         }
         
-        op.add(node);
-        dfs(node.left, op, p, q);
-        dfs(node.right, op, p, q);
-        op.remove(op.size()-1);
+        if(dfs(node.left, k, path) || dfs(node.right, k, path)){
+            return true;
+        }
+        path.remove(path.size()-1);
+        return false;
     }
 }
