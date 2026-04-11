@@ -12,14 +12,9 @@ class Solution {
         int prevIndex=0;
         for(int i=0; i<n; i++){
             int query = queriesIndex[i][0], index = queriesIndex[i][1];
-            for(int j=prevIndex; j<m; j++){
-                if(intervals[j][0]<=query){
-                    leastValid.add(new int[]{intervals[j][0], intervals[j][1], intervals[j][1]-intervals[j][0]+1});
-                }
-                else{
-                    prevIndex=j;
-                    break;
-                }
+            while(prevIndex<m && intervals[prevIndex][0]<=query){
+                leastValid.add(new int[]{intervals[prevIndex][0], intervals[prevIndex][1], intervals[prevIndex][1]-intervals[prevIndex][0]+1});
+                prevIndex++;
             }
             while(!leastValid.isEmpty() && leastValid.peek()[1] < query){
                 leastValid.remove();
