@@ -19,18 +19,18 @@ class Solution {
         return count;
         // return countMinElemtoRemove(intervals, 0, -1, dp);
     }
-    public int countMinElemtoRemove(int[][] intervals, int currIndex, int prevIndex, int[][] dp){
-        if(currIndex >= intervals.length){
-            return dp[currIndex][prevIndex+1] = 0;
-        }
-        if(dp[currIndex][prevIndex+1] != -1){
-            return dp[currIndex][prevIndex+1];
-        }
-        int doNotTake = 1+countMinElemtoRemove(intervals, currIndex+1, prevIndex, dp);
-        int take = 100000;
-        if(prevIndex == -1 || intervals[currIndex][0] >= intervals[prevIndex][1]){
-            take = countMinElemtoRemove(intervals, currIndex+1, currIndex, dp);
-        }        
-        return dp[currIndex][prevIndex+1] = Math.min(take, doNotTake);
-    }
+    // public int countMinElemtoRemove(int[][] intervals, int currIndex, int prevIndex, int[][] dp){
+    //     if(currIndex >= intervals.length){
+    //         return dp[currIndex][prevIndex+1] = 0;
+    //     }
+    //     if(dp[currIndex][prevIndex+1] != -1){
+    //         return dp[currIndex][prevIndex+1];
+    //     }
+    //     int doNotTake = 1+countMinElemtoRemove(intervals, currIndex+1, prevIndex, dp);
+    //     int take = 100000;
+    //     if(prevIndex == -1 || intervals[currIndex][0] >= intervals[prevIndex][1]){
+    //         take = countMinElemtoRemove(intervals, currIndex+1, currIndex, dp);
+    //     }        
+    //     return dp[currIndex][prevIndex+1] = Math.min(take, doNotTake);
+    // }
 }
