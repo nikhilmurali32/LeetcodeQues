@@ -12,30 +12,16 @@ class Solution {
         if(root==null){
             return null;
         }
-        List<TreeNode> pathP = new ArrayList<>();
-        List<TreeNode> pathQ = new ArrayList<>();
-        dfs(root, p, pathP);
-        dfs(root, q, pathQ);
-        int i=0;
-        while(i<Math.min(pathP.size(), pathQ.size()) && pathP.get(i).val==pathQ.get(i).val){
-            i++;
+        if(root==p || root==q){
+            return root;
         }
-        return pathP.get(i-1);
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
 
-    }
-    public boolean dfs(TreeNode node, TreeNode k, List<TreeNode> path){
-        if(node==null){
-            return false;
+        if(left!=null && right!=null){
+            return root;
         }
-        path.add(node);
-        if(node.val==k.val){
-            return true;
-        }
-        
-        if(dfs(node.left, k, path) || dfs(node.right, k, path)){
-            return true;
-        }
-        path.remove(path.size()-1);
-        return false;
+        return left==null?right:left;
+
     }
 }
