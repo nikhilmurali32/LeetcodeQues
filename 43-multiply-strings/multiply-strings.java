@@ -12,7 +12,6 @@ class Solution {
                 int ans = n1*n2 + carry;
                 int carryArr = (res[ind] + (ans % 10))/10;
                 res[ind] = (res[ind] + (ans % 10))%10;
-                // System.out.println(res[ind]);
                 carry = carryArr+ (int)(ans / 10);
                 ind--;
             }
@@ -28,7 +27,7 @@ class Solution {
         }
         StringBuilder finalString = new StringBuilder();
         while(i<m+n+1 && i<res.length){
-            finalString.append(String.valueOf(res[i]));
+            finalString.append(res[i]);
             i++;
         }
         String s = finalString.toString();
