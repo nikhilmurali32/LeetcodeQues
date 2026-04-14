@@ -4,25 +4,28 @@ class Solution {
         for(int i=0; i<26; i++){
             lowerCase[i] = (char)('a'+i);
         }
-        StringBuilder sb = new StringBuilder();
-        for(char ch:s.toCharArray()){
-            if(ch>='A' && ch<='Z'){
-                sb.append(lowerCase[ch-'A']);
-            }
-            else if((ch>='a' && ch<='z') || (ch>='0' && ch<='9')){
-                sb.append(ch);
-            }        
-        }
-        String finalString = sb.toString();
-        if(finalString.length()==0){
-            return true;
-        }
-        return checkPalindrome(finalString);
+        return checkPalindrome(s, lowerCase);
     }
-    public boolean checkPalindrome(String str){
+    public boolean checkPalindrome(String str, Character[] lowerCase){
         int l=0, r=str.length()-1;
         while(l<r){
-            if(str.charAt(l) != str.charAt(r)){
+            char chLeft = str.charAt(l);
+            char chRight = str.charAt(r);
+            if(!(chLeft>='a' && chLeft<='z') && !(chLeft>='0' && chLeft<='9') && !(chLeft>='A' && chLeft<='Z')){
+                l++;
+                continue;
+            }
+            if(!(chRight>='a' && chRight<='z') && !(chRight>='0' && chRight<='9') && !(chRight>='A' && chRight<='Z')){
+                r--;
+                continue;
+            }
+            if(chLeft>='A' && chLeft<='Z'){
+                chLeft = lowerCase[chLeft-'A'];
+            }
+            if(chRight>='A' && chRight<='Z'){
+                chRight = lowerCase[chRight-'A'];
+            } 
+            if(chLeft != chRight){
                 return false;
             }
             l++;
