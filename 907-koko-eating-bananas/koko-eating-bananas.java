@@ -1,48 +1,38 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
-        int n=piles.length;
-        if(n==0){
-            return 0;
-        }
-        long sum=0, max_elem=piles[0];
+        int minSpeed = 1;
+        int maxPile = 0;
         for(int pile:piles){
-            sum += (long)pile;
-            if((long)pile>max_elem){
-                max_elem=(long)pile;
-            }
+            maxPile = Math.max(maxPile, pile);
         }
-        long l=1;
-        long r=max_elem;
-        while(l<=r){
-            long mid = l-(l-r)/2;
-            if(canEat(piles, h, mid)){
-                r=mid-1;
+        int maxSpeed = maxPile;
+        while(minSpeed < maxSpeed){
+            int midSpeed = minSpeed + (maxSpeed-minSpeed)/2;
+            if(!canEat(piles, h, midSpeed)){
+                minSpeed = midSpeed+1;
             }
             else{
-                l=mid+1;
+                maxSpeed = midSpeed;
             }
-            System.out.println(mid);
         }
-        return (int)l;
+        return minSpeed;
     }
-    public boolean canEat(int[] piles, long h, long mid){
-        long tot_h=0;
-        for(long pile:piles){
-            if(pile<=mid){
-                tot_h++;
+    public boolean canEat(int[] piles, int h, int speed){
+        int currHours = 0;
+        for(int pile:piles){
+            if(pile>=speed){
+                currHours += pile/speed;
+                if(pile%speed != 0){
+                    currHours++;
+                }
             }
             else{
-                if(pile%mid==0){
-                    tot_h += ((long)pile/mid);
-                }
-                else{
-                    tot_h = tot_h + ((long)pile/mid)+1;
-                }
+                currHours++;
+            }
+            if(currHours > h){
+                return false;
             }
         }
-        if(tot_h<=h){
-            return true;
-        }
-        return false;
+        return true;
     }
 }
