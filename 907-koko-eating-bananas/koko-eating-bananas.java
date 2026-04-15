@@ -6,6 +6,7 @@ class Solution {
             maxPile = Math.max(maxPile, pile);
         }
         int maxSpeed = maxPile;
+        Arrays.sort(piles);
         while(minSpeed < maxSpeed){
             int midSpeed = minSpeed + (maxSpeed-minSpeed)/2;
             if(!canEat(piles, h, midSpeed)){
@@ -19,10 +20,10 @@ class Solution {
     }
     public boolean canEat(int[] piles, int h, int speed){
         int currHours = 0;
-        for(int pile:piles){
-            if(pile>=speed){
-                currHours += pile/speed;
-                if(pile%speed != 0){
+        for(int i=piles.length-1; i>=0; i--){
+            if(piles[i]>=speed){
+                currHours += piles[i]/speed;
+                if(piles[i]%speed != 0){
                     currHours++;
                 }
             }
