@@ -6,7 +6,7 @@ class Solution {
             maxPile = Math.max(maxPile, pile);
         }
         int maxSpeed = maxPile;
-        Arrays.sort(piles);
+        // Arrays.sort(piles);
         while(minSpeed < maxSpeed){
             int midSpeed = minSpeed + (maxSpeed-minSpeed)/2;
             if(!canEat(piles, h, midSpeed)){
