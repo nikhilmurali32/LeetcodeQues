@@ -1,40 +1,38 @@
 class MinStack {
-    //declare minElem=MAX_VALUE
-    Deque<Integer> normalStack;
-    Deque<Integer> minStack; 
+    Node head=null;
     public MinStack() {
-        //initisalize stack object
-        //initisalize stack object
-        normalStack = new ArrayDeque<>();
-        minStack = new ArrayDeque<>();
+        // head = new Node(0,0,null);
     }
     
     public void push(int val) {
-        // stack.add(val)
-        // update minElem
-
-        normalStack.addLast(val);
-        if(minStack.isEmpty() || val<=minStack.peekLast()){
-            minStack.addLast(val);
+        if(head==null){
+            head = new Node(val, val, null);
+        }
+        else{
+            head = new Node(val, Math.min(val, head.min), head);
         }
     }
     
     public void pop() {
-        // stack.remove()
-        int removeElement = normalStack.removeLast();
-        if(removeElement == minStack.peekLast()){
-            minStack.removeLast();
-        }
-
+        head = head.next;
     }
     
     public int top() {
-        // stack.peekfirst()
-        return normalStack.peekLast();
+        return head.val;
     }
     
     public int getMin() {
-        return minStack.peekLast();
+        return head.min;
+    }
+    public class Node{
+        Node next;
+        int val;
+        int min;
+        Node(int val, int min, Node next){
+            this.val=val;
+            this.min=min;
+            this.next=next;
+        }
     }
 }
 
