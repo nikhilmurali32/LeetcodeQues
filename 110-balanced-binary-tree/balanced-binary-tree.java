@@ -18,7 +18,9 @@ class Solution {
         if(root==null){
             return true;
         }
-        if(Math.abs(height(root.left) - height(root.right)) > 1){
+        int leftH = height(root.left);
+        int rightH = height(root.right);
+        if(leftH== 10000 || rightH==10000 || Math.abs(leftH - rightH) > 1){
             return false;
         }
         return isBalanced(root.left) && isBalanced(root.right);
