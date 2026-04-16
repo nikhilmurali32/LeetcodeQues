@@ -27,6 +27,11 @@ class Solution {
         if(node==null){
             return 0;
         }
+        int leftHeight = height(node.left);
+        int rightHeight = height(node.right);
+        if(leftHeight - rightHeight >1){
+            return 10000;
+        }
         return 1+Math.max(height(node.left), height(node.right));
     }
 }
