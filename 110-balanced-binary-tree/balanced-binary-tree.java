@@ -31,7 +31,7 @@ class Solution {
         }
         int leftHeight = height(node.left);
         int rightHeight = height(node.right);
-        if(leftHeight==10000 || rightHeight==10000 || leftHeight - rightHeight >1){
+        if(leftHeight==10000 || rightHeight==10000 || Math.abs(leftHeight - rightHeight) >1){
             return 10000;
         }
         return 1+Math.max(leftHeight, rightHeight);
