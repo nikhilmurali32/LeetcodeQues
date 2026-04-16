@@ -23,7 +23,7 @@ class Solution {
         if(leftH== 10000 || rightH==10000 || Math.abs(leftH - rightH) > 1){
             return false;
         }
-        return isBalanced(root.left) && isBalanced(root.right);
+        return true;
     }
     public int height(TreeNode node){
         if(node==null){
