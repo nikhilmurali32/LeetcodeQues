@@ -34,6 +34,6 @@ class Solution {
         if(leftHeight==10000 || rightHeight==10000 || leftHeight - rightHeight >1){
             return 10000;
         }
-        return 1+Math.max(height(node.left), height(node.right));
+        return 1+Math.max(leftHeight, rightHeight);
     }
 }
