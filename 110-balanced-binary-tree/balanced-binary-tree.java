@@ -18,9 +18,7 @@ class Solution {
         if(root==null){
             return true;
         }
-        int leftH = height(root.left);
-        int rightH = height(root.right);
-        if(leftH== 10000 || rightH==10000 || Math.abs(leftH - rightH) > 1){
+        if(height(root)==10000){
             return false;
         }
         return true;
