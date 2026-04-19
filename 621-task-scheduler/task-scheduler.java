@@ -1,36 +1,31 @@
 class Solution {
     public int leastInterval(char[] tasks, int n) {
-        HashMap<Character,Integer> hmap = new HashMap<>();
+        int[] freq = new int[26];
         for(char task:tasks){
-            hmap.put(task, hmap.getOrDefault(task,0)+1);
+            freq[task-'A']++;
         }
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b-a);
-        for(Map.Entry<Character, Integer> entry:hmap.entrySet()){
-            pq.add(entry.getValue());
-        }
-        int steps=0;
-        while(!pq.isEmpty()){
-            int cycle=n+1;
-            List<Integer> list = new ArrayList<>();
-            while(cycle>0 && !pq.isEmpty()){
-                int ele=pq.poll();
-                if(ele>0){
-                    ele--;
-                    list.add(ele);
-                }
-                cycle--;
-                steps++;
+        PriorityQueue<Integer> maxFreq = new PriorityQueue<>((a,b) -> (b-a));
+        for(int task: freq){
+            if(task>0){
+                maxFreq.add(task);
             }
-            for(int i:list){
-                if(i>0){
-                    pq.add(i);
+        }
+        Queue<int[]> waiting = new LinkedList<>();
+        int timer=0;
+        while(!maxFreq.isEmpty() || !waiting.isEmpty()){
+            if(!maxFreq.isEmpty()){
+                int currTask = maxFreq.poll();
+                currTask--;
+                if(currTask>0){
+                    waiting.add(new int[]{currTask, timer+n});
                 }
             }
-            if(!pq.isEmpty()){
-                steps += cycle;
+            if(!waiting.isEmpty() && waiting.peek()[1]==timer){
+                int[] freeTask = waiting.remove();
+                maxFreq.add(freeTask[0]);
             }
+            timer++;
         }
-        return steps;
-
+        return timer;
     }
 }
