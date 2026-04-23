@@ -9,37 +9,51 @@
  * }
  */
 class Solution {
+    ListNode new_head=null;
     public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode dummy = new ListNode(0);
-        dummy.next=head;
-        ListNode groupPrev=dummy;
-        while(true){
-            ListNode kth = getKthNode(groupPrev, k);
-            if(kth==null){
+        ListNode temp=head;
+        int len=0;
+        while(temp != null){
+            temp=temp.next;
+            len++;
+        }
+        temp=head;
+        ListNode prev=null;
+        int skip=0;        
+        while(temp!=null){
+            if(len-skip < k){
                 break;
             }
-            ListNode groupNext = kth.next;
-
-            ListNode prev=groupNext;
-            ListNode curr = groupPrev.next;
-            while(curr != groupNext){
-                ListNode next = curr.next;
-                curr.next = prev;
-                prev=curr;
-                curr=next;
+            reverse(temp, prev, k);
+            if(temp==null){
+                break;
             }
+            prev=temp;
+            temp=temp.next;
+            skip += k;
 
-            ListNode temp = groupPrev.next;
-            groupPrev.next=kth;
-            groupPrev=temp;
         }
-        return dummy.next;
+        return new_head;
     }
-    public ListNode getKthNode(ListNode node, int k){
-        while(node != null && k>0){
-            node = node.next;
-            k--;
+    public void reverse(ListNode node, ListNode prev, int k){
+        ListNode prevN=prev;
+        ListNode currN=node;
+        ListNode prevNode = prev;
+        ListNode currNode = node;
+        int steps=k;
+        while(currNode != null && steps > 0){
+            ListNode nextNode=currNode.next;
+            currNode.next=prevNode;
+            prevNode = currNode;
+            currNode=nextNode;
+            steps--;
         }
-        return node;
+        if(prevN != null){
+            prevN.next=prevNode;
+        }
+        if(prevN == null){
+            new_head=prevNode;
+        }
+        currN.next=currNode;
     }
 }
