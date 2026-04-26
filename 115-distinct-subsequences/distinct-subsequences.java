@@ -8,12 +8,9 @@ class Solution {
         for(int[] arr:dp){
             Arrays.fill(arr, -1);
         }
-        return countSubseq(s, t, 0, 0, m, n, new StringBuilder(), dp);
+        return countSubseq(s, t, 0, 0, m, n, dp);
     }
-    public int countSubseq(String s, String t, int i, int j, int m, int n, StringBuilder sb, int[][] dp){
-        if(sb.length()>n){
-            return dp[i][j]=0;
-        }
+    public int countSubseq(String s, String t, int i, int j, int m, int n,int[][] dp){
         if(j==n){
             return dp[i][j]=1;
         }
@@ -23,12 +20,10 @@ class Solution {
         if(dp[i][j] != -1){
             return dp[i][j];
         }
-        int doNotTake = countSubseq(s, t, i+1, j, m, n, sb, dp);
+        int doNotTake = countSubseq(s, t, i+1, j, m, n, dp);
         int take = 0;
         if(s.charAt(i)==t.charAt(j)) {
-            sb.append(s.charAt(i));
-            take = countSubseq(s, t, i+1, j+1, m, n, sb, dp);
-            sb.deleteCharAt(sb.length()-1);
+            take = countSubseq(s, t, i+1, j+1, m, n, dp);
         }
 
         return dp[i][j] = doNotTake + take;
