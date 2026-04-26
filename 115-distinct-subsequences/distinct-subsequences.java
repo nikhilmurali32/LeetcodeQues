@@ -11,6 +11,9 @@ class Solution {
         return countSubseq(s, t, 0, 0, m, n, new StringBuilder(), dp);
     }
     public int countSubseq(String s, String t, int i, int j, int m, int n, StringBuilder sb, int[][] dp){
+        if(sb.length()>n){
+            return dp[i][j]=0;
+        }
         if(j==n || i==m){
             if(sb.toString().equals(t)) return dp[i][j]=1;
             else return dp[i][j]=0;
