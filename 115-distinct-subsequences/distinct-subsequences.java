@@ -14,9 +14,11 @@ class Solution {
         if(sb.length()>n){
             return dp[i][j]=0;
         }
-        if(j==n || i==m){
-            if(sb.toString().equals(t)) return dp[i][j]=1;
-            else return dp[i][j]=0;
+        if(j==n){
+            return dp[i][j]=1;
+        }
+        if(i==m){
+            return dp[i][j]=0;
         }
         if(dp[i][j] != -1){
             return dp[i][j];
