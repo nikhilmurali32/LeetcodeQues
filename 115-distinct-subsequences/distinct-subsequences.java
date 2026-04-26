@@ -1,39 +1,31 @@
 class Solution {
-    int[][] dp;
     public int numDistinct(String s, String t) {
-        dp = new int[s.length()+1][t.length()+1];
-        // return helper(s, t, 0, 0, "");
-        dp[0][0]=1;
-        for(int i=0; i<s.length()+1; i++){
-            dp[i][0]=1;
+        int m=s.length(), n=t.length();
+        if(m<n){
+            return 0;
         }
-        for(int i=1; i<s.length()+1; i++){
-            for(int j=1; j<t.length()+1; j++){
-                if(s.charAt(i-1)==t.charAt(j-1)){
-                    dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
-                }
-                else{
-                    dp[i][j] = dp[i-1][j];
-                }
-            }
+        int[][] dp = new int[m+1][n+1];
+        for(int[] arr:dp){
+            Arrays.fill(arr, -1);
         }
-        return dp[s.length()][t.length()];
-
-
+        return countSubseq(s, t, 0, 0, m, n, new StringBuilder(), dp);
     }
-    // public int helper(String s, String t, int i, int j, String str){
-    //     if(i>s.length()-1 || j>t.length()-1 || str.equals(t)){
-    //         if(str.equals(t)){
-    //             return 1;
-    //         }
-    //         return 0;
-    //     }
-    //     if(dp[i][j] != null){
-    //         return dp[i][j];
-    //     }
-    //     if(s.charAt(i)==t.charAt(j)){
-    //         return dp[i][j] = helper(s, t, i+1, j+1, str+s.charAt(i)) + helper(s, t, i+1, j, str);
-    //     }
-    //     return dp[i][j] = helper(s, t, i+1, j, str);
-    // }
+    public int countSubseq(String s, String t, int i, int j, int m, int n, StringBuilder sb, int[][] dp){
+        if(j==n || i==m){
+            if(sb.toString().equals(t)) return dp[i][j]=1;
+            else return dp[i][j]=0;
+        }
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        int doNotTake = countSubseq(s, t, i+1, j, m, n, sb, dp);
+        int take = 0;
+        if(s.charAt(i)==t.charAt(j)) {
+            sb.append(s.charAt(i));
+            take = countSubseq(s, t, i+1, j+1, m, n, sb, dp);
+            sb.deleteCharAt(sb.length()-1);
+        }
+
+        return dp[i][j] = doNotTake + take;
+    }
 }
