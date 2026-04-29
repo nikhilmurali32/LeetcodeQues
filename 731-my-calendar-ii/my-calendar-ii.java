@@ -12,7 +12,13 @@ class MyCalendarTwo {
             bookings += val;
             if(bookings>2){
                 meets.put(startTime, meets.get(startTime)-1);
+                if(meets.get(startTime)==0){
+                    meets.remove(startTime);
+                }
                 meets.put(endTime, meets.get(endTime)+1);
+                if(meets.get(endTime)==0){
+                    meets.remove(endTime);
+                }
                 return false;
             }
         }
