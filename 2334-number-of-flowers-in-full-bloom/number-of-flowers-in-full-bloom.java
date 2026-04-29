@@ -1,8 +1,6 @@
 class Solution {
     public int[] fullBloomFlowers(int[][] flowers, int[] people) {
 
-        // {1:1}, {3:1}, {4,1}, {6,-1}, {7,-1}, {} .....
-
         TreeMap<Integer, Integer> flowerCount = new TreeMap<>();
         for(int[] flower:flowers){
             flowerCount.put(flower[0], flowerCount.getOrDefault(flower[0], 0)+1);
