@@ -1,49 +1,40 @@
 class Solution {
-class DisjointSet{
-    List<Integer> parent = new ArrayList<>();
-    List<Integer> size = new ArrayList<>();
-    DisjointSet(int n){
-        for(int i=0; i<n+1; i++){
-            parent.add(i);
-            size.add(1);
-        }
-    }
-    public int findParent(int node){
-        if(parent.get(node)==node){
-            return node;
-        }
-        int par = findParent(parent.get(node));
-        parent.set(node, par);
-        return parent.get(node);
-    }
-    public int[] joinBySize(int u, int v){
-        int ulp_u = findParent(u);
-        int ulp_v = findParent(v);
-        if(ulp_u==ulp_v){
-            return new int[]{u, v};
-        }
-        else if(size.get(ulp_u)<size.get(ulp_v)){
-            parent.set(ulp_u, ulp_v);
-            size.set(ulp_v, size.get(ulp_u)+size.get(ulp_v));
-            return new int[2];
-        }
-        else{
-            parent.set(ulp_v, ulp_u);
-            size.set(ulp_u, size.get(ulp_u)+size.get(ulp_v)); 
-            return new int[2];           
-        }
-    }
-
-}
     public int[] findRedundantConnection(int[][] edges) {
-        DisjointSet dis = new DisjointSet(edges.length);
-        int[] res = new int[2];
+        List<List<Integer>> adjList = new ArrayList<>();
+        for(int i=0; i<=edges.length; i++){
+            adjList.add(new ArrayList<>());
+        }
         for(int[] edge:edges){
-            res = dis.joinBySize(edge[0], edge[1]);
-            if(res[0] != 0){
-                return res;
+            int u=edge[0], v=edge[1];
+            if(hasPath(u, v, adjList)){
+                return new int[]{u,v};
+            }
+            else{
+                adjList.get(u).add(v);
+                adjList.get(v).add(u);
             }
         }
-        return res;
+        return new int[]{-1,-1};
+    }
+    public boolean hasPath(int u, int v, List<List<Integer>> adjList){
+        Queue<int[]> nodesQ = new LinkedList<>();
+        nodesQ.add(new int[]{u,-1});
+        while(!nodesQ.isEmpty()){
+            int size = nodesQ.size();
+            for(int i=0; i<size; i++){
+                int currNode = nodesQ.peek()[0];
+                int currNodeP = nodesQ.remove()[1];
+                for(int nei:adjList.get(currNode)){
+                    if(nei == v){
+                        return true;
+                    }
+                    if(nei==currNodeP){
+                        continue;
+                    }
+                    nodesQ.add(new int[]{nei, currNode});
+                }
+            }
+        }
+        return false;
     }
 }
