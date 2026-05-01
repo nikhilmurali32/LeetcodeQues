@@ -15,6 +15,7 @@ class Solution {
     }
     public void bfs(char[][] grid, int i, int j){
         int m=grid.length, n=grid[0].length;
+        int[][] dirs = {{0,1}, {0, -1}, {-1, 0}, {1,0}};
         grid[i][j]='0';
         Queue<int[]> landCells = new LinkedList<>();
         landCells.add(new int[]{i,j});
@@ -22,17 +23,15 @@ class Solution {
             int size=landCells.size();
             int currI = landCells.peek()[0];
             int currJ = landCells.remove()[1];
-            for(int k=-1; k<=1; k++){
-                if(k==0){
-                    continue;
+            for(int[] dir:dirs){
+                int newI = currI+dir[0], newJ = currJ+dir[1];
+                if(newI>= 0 && newI<m && grid[newI][currJ]=='1'){
+                    grid[newI][currJ]='0';
+                    landCells.add(new int[]{newI, currJ});
                 }
-                if(currI+k >= 0 && currI+k<m && grid[currI+k][currJ]=='1'){
-                    grid[currI+k][currJ]='0';
-                    landCells.add(new int[]{currI+k, currJ});
-                }
-                if(currJ+k >= 0 && currJ+k<n && grid[currI][currJ+k]=='1'){
-                    grid[currI][currJ+k]='0';
-                    landCells.add(new int[]{currI, currJ+k});
+                if(newJ >= 0 && newJ<n && grid[currI][newJ]=='1'){
+                    grid[currI][newJ]='0';
+                    landCells.add(new int[]{currI, newJ});
                 }
             }
             
