@@ -21,8 +21,9 @@ class Solution {
         landCells.add(new int[]{i,j});
         while(!landCells.isEmpty()){
             int size=landCells.size();
-            int currI = landCells.peek()[0];
-            int currJ = landCells.remove()[1];
+            int[] currIJ = landCells.remove();
+            int currI = currIJ[0];
+            int currJ = currIJ[1];
             for(int[] dir:dirs){
                 int newI = currI+dir[0], newJ = currJ+dir[1];
                 if(newI>= 0 && newI<m && grid[newI][currJ]=='1'){
