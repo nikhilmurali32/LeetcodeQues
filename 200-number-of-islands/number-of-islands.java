@@ -24,15 +24,11 @@ class Solution {
             int[] currIJ = landCells.remove();
             int currI = currIJ[0];
             int currJ = currIJ[1];
-            for(int[] dir:dirs){
-                int newI = currI+dir[0], newJ = currJ+dir[1];
-                if(newI>= 0 && newI<m && grid[newI][currJ]=='1'){
-                    grid[newI][currJ]='0';
-                    landCells.add(new int[]{newI, currJ});
-                }
-                if(newJ >= 0 && newJ<n && grid[currI][newJ]=='1'){
-                    grid[currI][newJ]='0';
-                    landCells.add(new int[]{currI, newJ});
+            for(int k=0; k<dirs.length; k++){
+                int newI = currI+dirs[k][0], newJ = currJ+dirs[k][1];
+                if(newI>= 0 && newI<m && newJ >= 0 && newJ<n && grid[newI][newJ]=='1'){
+                    grid[newI][newJ]='0';
+                    landCells.add(new int[]{newI, newJ});                    
                 }
             }
             
