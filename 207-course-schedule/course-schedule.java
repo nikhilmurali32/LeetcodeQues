@@ -4,31 +4,31 @@ class Solution {
         for (int i = 0; i < numCourses; i++) {
             adjList.add(new ArrayList<>());
         }
-        int[] inDegrees = new int[numCourses];
         for(int[] pre:prerequisites){
             adjList.get(pre[1]).add(pre[0]);
-            inDegrees[pre[0]]++;
         }
-        Queue<Integer> canTake = new LinkedList<>();
-        int count=0;
+        int[] state = new int[numCourses];
         for(int i=0; i<numCourses; i++){
-            if(inDegrees[i]==0){
-                count++;
-                canTake.add(i);
+            if(isCycle(i, adjList, state)){
+                return false;
             }
         }
-        while(!canTake.isEmpty()){
-            for(int i:adjList.get(canTake.remove())){
-                inDegrees[i]--;
-                if(inDegrees[i]==0){
-                    count++;
-                    canTake.add(i);
-                }
-            }
-            if(count==numCourses){
+        return true;
+    }
+    public boolean isCycle(int course, List<List<Integer>> adjList, int[] state){
+        if(state[course]==1){
+            return true;
+        }
+        if(state[course]==2){
+            return false;
+        }
+        state[course]=1;
+        for(int i:adjList.get(course)){
+            if(isCycle(i, adjList, state)){
                 return true;
             }
         }
+        state[course]=2;
         return false;
     }
 }
