@@ -39,7 +39,6 @@ class Solution {
         }
     }
     public int numIslands(char[][] grid) {
-        // traverse grid -> encounter 1 -> unionFind on adj cells of 1s -> return distinct parents from parent array
         m=grid.length;
         n=grid[0].length;
         disjointSet d = new disjointSet();
