@@ -1,37 +1,63 @@
 class Solution {
-    public int numIslands(char[][] grid) {
-        int m=grid.length, n=grid[0].length;
+    int m, n;
+    class disjointSet{
         int count=0;
+        int[] size = new int[m*n];
+        int[] parent = new int[m*n];
+        disjointSet(){
+            for(int i=0; i<m; i++){
+                for(int j=0; j<n; j++){
+                    parent[i*n + j]=i*n+j;
+                    size[i*n+j]=1;
+                }
+            }
+        }
+        public int findParent(int cell){
+            if(parent[cell]==cell){
+                return parent[cell];
+            }
+            int p = findParent(parent[cell]);
+            parent[cell]=p;
+            return parent[cell];
+        }
+
+        public void joinbySize(int node, int nei_node){
+            int ij_parent = findParent(node);
+            int nei_ij_parent = findParent(nei_node);
+            if(ij_parent==nei_ij_parent){
+                return;
+            }
+            if(size[ij_parent] > size[nei_ij_parent]){
+                parent[nei_ij_parent] = parent[ij_parent];
+                size[ij_parent] += size[nei_ij_parent];
+            }
+            else{
+                parent[ij_parent] = parent[nei_ij_parent];
+                size[nei_ij_parent] += size[ij_parent];                
+            }
+            count--;
+        }
+    }
+    public int numIslands(char[][] grid) {
+        // traverse grid -> encounter 1 -> unionFind on adj cells of 1s -> return distinct parents from parent array
+        m=grid.length;
+        n=grid[0].length;
+        disjointSet d = new disjointSet();
+        int[][] dirs = {{0,1}, {0,-1}, {1,0}, {-1,0}};
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
-                if(grid[i][j] == '1'){
-                    bfs(grid, i, j);
-                    count++;
+                if(grid[i][j]=='1'){
+                    d.count++;
+                    for(int k=0; k<4; k++){
+                        int nei_i = i+dirs[k][0];
+                        int nei_j = j+dirs[k][1];
+                        if(nei_i>=0 && nei_i<m && nei_j>=0 && nei_j<n && grid[nei_i][nei_j]=='1'){
+                            d.joinbySize(i*n+j, nei_i*n + nei_j);
+                        }
+                    }
                 }
             }
         }
-        return count;
-
-    }
-    public void bfs(char[][] grid, int i, int j){
-        int m=grid.length, n=grid[0].length;
-        int[][] dirs = {{0,1}, {0, -1}, {-1, 0}, {1,0}};
-        grid[i][j]='0';
-        Queue<int[]> landCells = new LinkedList<>();
-        landCells.add(new int[]{i,j});
-        while(!landCells.isEmpty()){
-            int size=landCells.size();
-            int[] currIJ = landCells.remove();
-            int currI = currIJ[0];
-            int currJ = currIJ[1];
-            for(int k=0; k<dirs.length; k++){
-                int newI = currI+dirs[k][0], newJ = currJ+dirs[k][1];
-                if(newI>= 0 && newI<m && newJ >= 0 && newJ<n && grid[newI][newJ]=='1'){
-                    grid[newI][newJ]='0';
-                    landCells.add(new int[]{newI, newJ});                    
-                }
-            }
-            
-        }
+        return d.count;
     }
 }
