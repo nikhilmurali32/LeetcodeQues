@@ -1,11 +1,6 @@
 class Solution {
     public int sumOfPrimesInRange(int n) {
-        String str = String.valueOf(n);
-        String rev = "";
-        for(int i=str.length()-1; i>=0; i--){
-            rev += str.charAt(i);
-        }
-        int flip = Integer.valueOf(rev);
+        int flip = reverse(n);
         int l=Math.min(flip, n);
         int r=Math.max(flip, n);
         int sum=0;
@@ -32,5 +27,13 @@ class Solution {
             }
         }
         return true;
+    }
+    public int reverse(int n){
+        int rev=0;
+        while(n>0){
+            rev = rev*10 + n%10;
+            n = n/10;
+        }
+        return rev;
     }
 }
