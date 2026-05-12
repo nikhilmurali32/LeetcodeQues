@@ -3,7 +3,6 @@ class Solution {
         int i=0;
         while(i<nums.length){
             if(nums[i]>0 && nums[i]<=nums.length && nums[i]!=i+1 && nums[i]!=nums[nums[i]-1]){
-                System.out.println(nums[i]);
                 swap(nums, i, nums[i]-1);
                 continue;
             }
