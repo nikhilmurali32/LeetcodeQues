@@ -1,10 +1,7 @@
 class Bank {
     long[] accBalance;
     public Bank(long[] balance) {
-        accBalance = new long[balance.length];
-        for(int i=0; i<balance.length; i++){
-            accBalance[i] = balance[i];
-        }
+        this.accBalance = balance;
     }
     
     public boolean transfer(int account1, int account2, long money) {
