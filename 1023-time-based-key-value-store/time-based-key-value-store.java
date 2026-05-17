@@ -31,17 +31,31 @@ class TimeMap {
         if(list==null || list.size()==0){
             return "";
         }
-        int i=list.size()-1;
-        if(list.get(i).timestamp<=timestamp){
-            return list.get(i).value;
+        // int i=list.size()-1;
+        if(list.get(list.size()-1).timestamp<=timestamp){
+            return list.get(list.size()-1).value;
         }
-        while(i>=0 && list.get(i).timestamp>timestamp){
-            i--;
-        }
-        if(i<0){
+        if(list.get(0).timestamp>timestamp){
             return "";
         }
-        return list.get(i).value;
+        // while(i>=0 && list.get(i).timestamp>timestamp){
+        //     i--;
+        // }
+        // if(i<0){
+        //     return "";
+        // }
+        // return list.get(i).value;
+        int l=0, r=list.size()-1;
+        while(l<r){
+            int mid = (int)Math.ceil((double)(l+r)/2);
+            if(list.get(mid).timestamp>timestamp){
+                r=mid-1;
+            }
+            else{
+                l=mid;
+            }
+        }
+        return list.get(l).value;
     }
 }
 
