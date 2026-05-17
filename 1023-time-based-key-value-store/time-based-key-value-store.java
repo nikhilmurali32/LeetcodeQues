@@ -38,10 +38,6 @@ class TimeMap {
         while(i>=0 && list.get(i).timestamp>timestamp){
             i--;
         }
-        // if(i>=0 && list.get(i).timestamp==timestamp){
-        //     return list.get(i).value;
-        // }
-        System.out.println(i);
         if(i<0){
             return "";
         }
