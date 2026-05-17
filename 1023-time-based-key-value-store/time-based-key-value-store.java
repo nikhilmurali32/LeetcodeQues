@@ -1,56 +1,51 @@
 class TimeMap {
-    HashMap<String, String> hmap;
-    HashMap<String, List<Integer>> pos;
+    class Node{
+        String value;
+        int timestamp;
+        Node next=null;
+        Node(String value, int timestamp){
+            this.value=value;
+            this.timestamp=timestamp;
+        }
+    }
+    HashMap<String, List<Node>> hmap;
     public TimeMap() {
         hmap = new HashMap<>();
-        pos = new HashMap<>();
     }
     
     public void set(String key, String value, int timestamp) {
-        List<Integer> list;
-        if(pos.containsKey(key)){
-            list = pos.get(key);
+        Node node = new Node(value, timestamp);
+        if(!hmap.containsKey(key)){
+            hmap.put(key, new ArrayList<>());
+            hmap.get(key).add(node);
+            return;
         }
-        else{
-            list = new ArrayList<>();
-        }
-        list.add(timestamp);
-        pos.put(key, list);
-        String newKey = key+","+String.valueOf(timestamp);
-        hmap.put(newKey, value);
+        List<Node> list = hmap.get(key);
+        list.get(list.size()-1).next = node;
+        list.add(node);
+        return;
     }
     
     public String get(String key, int timestamp) {
-        List<Integer> posArr;
-        if(pos.containsKey(key)){
-            posArr = pos.get(key);
-        }
-        else{
+        List<Node> list = hmap.get(key);
+        if(list==null || list.size()==0){
             return "";
         }
-        if(posArr.size()==0){
+        int i=list.size()-1;
+        if(list.get(i).timestamp<=timestamp){
+            return list.get(i).value;
+        }
+        while(i>=0 && list.get(i).timestamp>timestamp){
+            i--;
+        }
+        // if(i>=0 && list.get(i).timestamp==timestamp){
+        //     return list.get(i).value;
+        // }
+        System.out.println(i);
+        if(i<0){
             return "";
         }
-        int l=0, r=posArr.size()-1;
-        int res=-1;
-        while(l<=r){
-            int mid = l + (r-l)/2;
-            if(timestamp >= posArr.get(mid)){
-                res=mid;
-                l=mid+1;
-            }
-            else{
-                r=mid-1;
-            }
-        }
-        if(res<=-1 || timestamp<posArr.get(res)){
-            return "";
-        }
-        String findKey = key + "," + String.valueOf(posArr.get(res));
-        if(hmap.containsKey(findKey)){
-            return hmap.get(findKey);
-        }
-        return "";
+        return list.get(i).value;
     }
 }
 
