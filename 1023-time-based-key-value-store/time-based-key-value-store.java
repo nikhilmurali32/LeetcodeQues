@@ -21,7 +21,7 @@ class TimeMap {
             return;
         }
         List<Node> list = hmap.get(key);
-        list.get(list.size()-1).next = node;
+        // list.get(list.size()-1).next = node;
         list.add(node);
         return;
     }
