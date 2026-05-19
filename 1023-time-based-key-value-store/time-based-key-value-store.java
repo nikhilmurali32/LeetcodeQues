@@ -2,7 +2,6 @@ class TimeMap {
     class Node{
         String value;
         int timestamp;
-        Node next=null;
         Node(String value, int timestamp){
             this.value=value;
             this.timestamp=timestamp;
@@ -21,7 +20,6 @@ class TimeMap {
             return;
         }
         List<Node> list = hmap.get(key);
-        // list.get(list.size()-1).next = node;
         list.add(node);
         return;
     }
