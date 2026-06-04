@@ -2,9 +2,11 @@ class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
         HashMap<String, List<String>> anagrams = new HashMap<>();
         for(String str:strs){
-            char[] ch_arr = str.toCharArray();
-            Arrays.sort(ch_arr);
-            String sorted_str = new String(ch_arr);
+            int[] freq = new int[26];
+            for(char ch:str.toCharArray()){
+                freq[ch-'a']++;
+            }
+            String sorted_str = Arrays.toString(freq);
             if(!anagrams.containsKey(sorted_str)){
                 anagrams.put(sorted_str, new ArrayList<>());
             }
