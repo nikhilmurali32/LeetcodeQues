@@ -2,7 +2,7 @@ class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
         HashMap<String, List<String>> anagrams = new HashMap<>();
         for(String str:strs){
-            char[] freq = new char[101];
+            char[] freq = new char[26];
             for(char ch:str.toCharArray()){
                 freq[ch-'a']++;
             }
