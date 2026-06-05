@@ -1,31 +1,31 @@
 class Solution {
     public boolean isPalindrome(String s) {
-        Character[] lowerCase = new Character[26];
-        for(int i=0; i<26; i++){
-            lowerCase[i] = (char)('a'+i);
+        HashSet<Character> alpNum = new HashSet<>();
+        for(char c='a'; c<='z'; c++){
+            alpNum.add(c);
         }
-        return checkPalindrome(s, lowerCase);
+        for(char c='A'; c<='Z'; c++){
+            alpNum.add(c);
+        }
+        for(char c='0'; c<='9'; c++){
+            alpNum.add(c);
+        }
+        StringBuilder sb = new StringBuilder();
+        for(char ch:s.toCharArray()){
+            if(alpNum.contains(ch)){
+                if(ch>='A' && ch<='Z'){
+                    ch = (char) (ch - 'A' + 'a');
+                }
+                sb.append(ch);
+            }
+        }
+        return checkPalindrome(sb.toString());
     }
-    public boolean checkPalindrome(String str, Character[] lowerCase){
-        int l=0, r=str.length()-1;
+    public boolean checkPalindrome(String str){
+        int l=0;
+        int r=str.length()-1;
         while(l<r){
-            char chLeft = str.charAt(l);
-            char chRight = str.charAt(r);
-            if(!(chLeft>='a' && chLeft<='z') && !(chLeft>='0' && chLeft<='9') && !(chLeft>='A' && chLeft<='Z')){
-                l++;
-                continue;
-            }
-            if(!(chRight>='a' && chRight<='z') && !(chRight>='0' && chRight<='9') && !(chRight>='A' && chRight<='Z')){
-                r--;
-                continue;
-            }
-            if(chLeft>='A' && chLeft<='Z'){
-                chLeft = lowerCase[chLeft-'A'];
-            }
-            if(chRight>='A' && chRight<='Z'){
-                chRight = lowerCase[chRight-'A'];
-            } 
-            if(chLeft != chRight){
+            if(str.charAt(l) != str.charAt(r)){
                 return false;
             }
             l++;
