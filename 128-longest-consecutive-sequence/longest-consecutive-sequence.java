@@ -5,14 +5,12 @@ class Solution {
             distinct.add(num);
         }
         int max=0;
-        for(int num:nums){
-            if(distinct.contains(num) && !distinct.contains(num-1)){
+        for(int num:distinct){
+            if(!distinct.contains(num-1)){
                 int count=1;
-                distinct.remove(num);
                 while(distinct.contains(num+1)){
                     count++;
                     num++;
-                    distinct.remove(num);
                 }
                 max = Math.max(max, count);
             }
