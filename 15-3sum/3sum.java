@@ -5,6 +5,9 @@ class Solution {
         List<List<Integer>> res = new ArrayList<>();
         HashSet<List<Integer>> hset = new HashSet<>();
         for(int i=0; i<n-2; i++){
+            if(i>0 && nums[i]==nums[i-1]){
+                continue;
+            }
             int first = nums[i];
             for(int j=i+1; j<n-1; j++){
                 int second = nums[j];
