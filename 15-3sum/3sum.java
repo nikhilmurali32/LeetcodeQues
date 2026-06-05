@@ -3,31 +3,32 @@ class Solution {
         int n=nums.length;
         Arrays.sort(nums);
         List<List<Integer>> res = new ArrayList<>();
-        HashSet<List<Integer>> hset = new HashSet<>();
         for(int i=0; i<n-2; i++){
             if(i>0 && nums[i]==nums[i-1]){
                 continue;
             }
             int first = nums[i];
-            for(int j=i+1; j<n-1; j++){
-                int second = nums[j];
-                int l=j+1, r=n-1;
-                while(l<r){
-                    int mid = l + (r-l)/2;
-                    if(nums[mid] < -1*(first+second)){
-                        l = mid+1;
+            int l=i+1, r=n-1;
+            while(l<r){
+                int sum = first + nums[l] + nums[r];
+                if(sum==0){
+                    res.add(new ArrayList<>(Arrays.asList(first, nums[l], nums[r])));
+                    l++;
+                    r--;
+                    while(l>0 && l<n && nums[l]==nums[l-1]){
+                        l++;
                     }
-                    else{
-                        r = mid;
+                    while(r<n-1 && r>=0 && nums[r]==nums[r+1]){
+                        r--;
                     }
                 }
-                if(nums[l] == -1*(first+second)){
-                    hset.add(new ArrayList<>(Arrays.asList(first, second, nums[l])));
+                else if(sum<0){
+                    l++;
+                }
+                else{
+                    r--;
                 }
             }
-        }
-        for(List<Integer> arr:hset){
-            res.add(arr);
         }
         return res;
     }
