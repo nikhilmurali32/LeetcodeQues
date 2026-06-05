@@ -1,39 +1,31 @@
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> list = new ArrayList<>();
+        int n=nums.length;
         Arrays.sort(nums);
-        for(int i=0; i<nums.length; i++){
-            if(i>0 && nums[i]==nums[i-1]){
-                continue;
-            }
-            int curr=nums[i];
-            int l=i+1, r=nums.length-1;
-            while(l<r){
-                int sum=curr+nums[l]+nums[r];
-                if(sum==0){
-                    List<Integer> res = new ArrayList<>();
-                    res.add(nums[i]);
-                    res.add(nums[l]);
-                    res.add(nums[r]);
-                    l++;
-                    r--;
-                    list.add(res);
-                    while(l<r && nums[l]==nums[l-1]){
-                        l++;
+        List<List<Integer>> res = new ArrayList<>();
+        HashSet<List<Integer>> hset = new HashSet<>();
+        for(int i=0; i<n-2; i++){
+            int first = nums[i];
+            for(int j=i+1; j<n-1; j++){
+                int second = nums[j];
+                int l=j+1, r=n-1;
+                while(l<r){
+                    int mid = l + (r-l)/2;
+                    if(nums[mid] < -1*(first+second)){
+                        l = mid+1;
                     }
-                    while(l<r && nums[r]==nums[r+1]){
-                        r--;
+                    else{
+                        r = mid;
                     }
                 }
-                else if(sum<0){
-                    l++;
+                if(nums[l] == -1*(first+second)){
+                    hset.add(new ArrayList<>(Arrays.asList(first, second, nums[l])));
                 }
-                else{
-                    r--;
-                }
-
             }
         }
-        return list;
+        for(List<Integer> arr:hset){
+            res.add(arr);
+        }
+        return res;
     }
 }
