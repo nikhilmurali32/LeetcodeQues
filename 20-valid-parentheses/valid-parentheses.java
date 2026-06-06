@@ -1,13 +1,9 @@
 class Solution {
     public boolean isValid(String s) {
-        // traverse(left->right)
-        // create open brackets pool
-        // compare the close bracket with the first open bracket
-        int n = s.length();
-        if(n%2 != 0){
-            return false;
+        if(s.length()==0){
+            return true;
         }
-        Deque<Character> stack = new ArrayDeque<>();
+        ArrayDeque<Character> stack = new ArrayDeque<>();
         for(char ch:s.toCharArray()){
             if(ch=='(' || ch=='{' || ch=='['){
                 stack.addLast(ch);
@@ -16,9 +12,23 @@ class Solution {
                 if(stack.isEmpty()){
                     return false;
                 }
-                char topMost = stack.removeLast();
-                if((ch==')' && topMost !='(') || (ch=='}' && topMost !='{') || (ch==']' && topMost !='[')){
-                    return false;
+                if(ch==')'){
+                    if(stack.peekLast()!='('){
+                        return false;
+                    }
+                    stack.removeLast();
+                }
+                else if(ch=='}'){
+                    if(stack.peekLast()!='{'){
+                        return false;
+                    }
+                    stack.removeLast();                    
+                }
+                else{
+                    if(stack.peekLast()!='['){
+                        return false;
+                    }
+                    stack.removeLast();
                 }
             }
         }
