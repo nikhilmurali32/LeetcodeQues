@@ -1,29 +1,28 @@
 class Solution {
     public int evalRPN(String[] tokens) {
-        Stack<Integer> st = new Stack<>();
-        for(String c:tokens){
-            if(c.equals("+") || c.equals("-") || c.equals("*") || c.equals("/")){
-                if(c.equals("+")){
-                    st.push(st.pop()+ st.pop());
-                }
-                else if(c.equals("-")){
-                    st.push(-1*st.pop()+ st.pop());
-                }
-                else if(c.equals("*")){
-                    st.push(st.pop()* st.pop());
-                }
-                else{
-                    int b=st.pop();
-                    int a=st.pop();
-                    a=a/b;
-                    st.push(a);
-                }                
-                
+        HashSet<String> symbols = new HashSet<>(Arrays.asList("+", "-", "*", "/"));
+        Deque<Integer> numbers = new ArrayDeque<>();
+        for(String token:tokens){
+            if(!symbols.contains(token)){
+                numbers.addLast(Integer.valueOf(token));
             }
             else{
-                st.push(Integer.parseInt(c));
-            }            
+                int second = numbers.removeLast();
+                int first = numbers.removeLast();
+                if(token.equals("+")){
+                    numbers.addLast(first+second);
+                }
+                else if(token.equals("-")){
+                    numbers.addLast(first-second);
+                }
+                else if(token.equals("*")){
+                    numbers.addLast(first*second);
+                }
+                else{
+                    numbers.addLast(first/second);
+                }
+            }
         }
-        return st.pop();
+        return numbers.removeLast();
     }
 }
