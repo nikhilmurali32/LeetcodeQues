@@ -1,12 +1,10 @@
 class Solution {
     public String minWindow(String s, String t) {
         HashMap<Character, Integer> uniqueS = new HashMap<>();
-        HashSet<Character> hset = new HashSet<>();
         for(char ch:t.toCharArray()){
             uniqueS.put(ch, uniqueS.getOrDefault(ch, 0)+1);
-            hset.add(ch);
         }
-        int count=hset.size();
+        int count=uniqueS.size();
         int i=0, j=0, n=s.length();
         String res= "";
         int minLen = n+1;
