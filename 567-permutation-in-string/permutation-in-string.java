@@ -1,29 +1,53 @@
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
-        int m=s1.length(), n=s2.length();
-        if(m>n){
-            return false;
-        }
-        int[] freqMaps1 = new int[26];
+        HashSet<Character> uniqueS1 = new HashSet<>();
+        int[] freq = new int[26];
         for(char ch:s1.toCharArray()){
-            freqMaps1[ch-'a']++;
+            uniqueS1.add(ch);
+            freq[ch-'a']++;
         }
-        int[] freqMaps2 = new int[26];
         int i=0, j=0;
-        while(i<=j && j<n){
-            char ch=s2.charAt(j);
-            freqMaps2[ch-'a']++;
-            if(j-i+1 < m){
-                j++;                
-                continue;
-            }            
-            if(Arrays.equals(freqMaps1, freqMaps2)){
-                return true;
+        while(i<=j && j<s2.length()){
+            if(!uniqueS1.contains(s2.charAt(j))){
+                if(i==j){
+                    i++;
+                    j++;
+                }
+                else{
+                    while(i<j){
+                        if(uniqueS1.contains(s2.charAt(i))){
+                            freq[s2.charAt(i)-'a']++;
+                        }
+                        i++;
+                    }
+                    i++;
+                    j++;
+                }
             }
-            freqMaps2[s2.charAt(i)-'a']--;
-            i++;
-            j++;
+            else{
+                if(freq[s2.charAt(j)-'a']==0){
+                    while(i<j && freq[s2.charAt(j)-'a']<=0){
+                        if(uniqueS1.contains(s2.charAt(i))){
+                            freq[s2.charAt(i)-'a']++;
+                        }
+                        i++;
+                    }                   
+                }
+                freq[s2.charAt(j)-'a']--;
+                if(check(freq)){
+                    return true;
+                }
+                j++;
+            }
         }
         return false;
+    }
+    public boolean check(int[] arr){
+        for(int i:arr){
+            if(i!=0){
+                return false;
+            }
+        }
+        return true;
     }
 }
