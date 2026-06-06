@@ -3,6 +3,9 @@ class Solution {
         if(s.length()==0){
             return true;
         }
+        if(s.length() % 2 != 0){
+            return false;
+        }
         ArrayDeque<Character> stack = new ArrayDeque<>();
         for(char ch:s.toCharArray()){
             if(ch=='(' || ch=='{' || ch=='['){
