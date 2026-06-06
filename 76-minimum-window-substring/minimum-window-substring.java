@@ -6,8 +6,8 @@ class Solution {
         }
         int count=uniqueS.size();
         int i=0, j=0, n=s.length();
-        String res= "";
-        int minLen = n+1;
+        int startInd= 0;
+        int minLen = Integer.MAX_VALUE;
         while(i<=j && j<n){
             char ch = s.charAt(j);
             if(uniqueS.containsKey(ch)){
@@ -18,7 +18,7 @@ class Solution {
                 while(count==0){
                     if((j-i+1)<minLen){
                         minLen = j-i+1;
-                        res = s.substring(i, j+1);
+                        startInd=i;
                     }
                     char leftChar = s.charAt(i);
                     if(uniqueS.containsKey(leftChar)){
@@ -32,6 +32,6 @@ class Solution {
             }
             j++;
         }
-        return res;
+        return minLen==Integer.MAX_VALUE?"":s.substring(startInd, startInd+minLen);
     }
 }
