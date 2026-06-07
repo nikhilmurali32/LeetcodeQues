@@ -1,15 +1,15 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
-        int minSpeed = 1;
-        int maxPile = 0;
-        for(int pile:piles){
-            maxPile = Math.max(maxPile, pile);
+        if(piles.length>h){
+            return -1;
         }
-        int maxSpeed = maxPile;
-        // Arrays.sort(piles);
+        int minSpeed=1, maxSpeed=1;
+        for(int pile:piles){
+            maxSpeed = Math.max(maxSpeed, pile);
+        }
         while(minSpeed < maxSpeed){
             int midSpeed = minSpeed + (maxSpeed-minSpeed)/2;
-            if(!canEat(piles, h, midSpeed)){
+            if(!canEat(piles, midSpeed, h)){
                 minSpeed = midSpeed+1;
             }
             else{
@@ -18,22 +18,14 @@ class Solution {
         }
         return minSpeed;
     }
-    public boolean canEat(int[] piles, int h, int speed){
-        int currHours = 0;
-        for(int i=piles.length-1; i>=0; i--){
-            if(piles[i]>=speed){
-                currHours += piles[i]/speed;
-                if(piles[i]%speed != 0){
-                    currHours++;
-                }
-            }
-            else{
-                currHours++;
-            }
-            if(currHours > h){
-                return false;
+    public boolean canEat(int[] piles, int midSpeed, int h){
+        int timeTaken=0;
+        for(int pile:piles){
+            timeTaken += pile/midSpeed;
+            if(pile%midSpeed != 0){
+                timeTaken++;
             }
         }
-        return true;
+        return timeTaken<=h;
     }
 }
