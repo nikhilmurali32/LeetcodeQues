@@ -1,6 +1,6 @@
 class Solution {
     public int search(int[] nums, int target) {
-        int l=0, r=nums.length-1;
+        int l=0, r=nums.length;
         while(l<r){
             int mid = l+(r-l)/2;
             if(nums[mid]<target){
@@ -10,6 +10,6 @@ class Solution {
                 r=mid;
             }
         }
-        return nums[l]==target?l:-1;
+        return l>nums.length-1 || nums[l]!=target?-1:l;
     }
 }
