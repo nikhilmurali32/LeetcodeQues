@@ -7,7 +7,6 @@ class Solution {
         for(int i=0; i<n; i++){
             time[i][0]=target-position[i];
             time[i][1]=((double)(target-position[i])/speed[i]);
-            System.out.println(time[i][1]);
         }
         Arrays.sort(time, (a,b) -> Double.compare(a[0], b[0]));
         int i=0;
