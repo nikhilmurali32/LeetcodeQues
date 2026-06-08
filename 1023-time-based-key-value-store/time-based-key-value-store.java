@@ -1,44 +1,40 @@
 class TimeMap {
     class Node{
-        String value;
+        String key, value;
         int timestamp;
-        Node(String value, int timestamp){
+        Node(String key, String value, int timestamp){
+            this.key=key;
             this.value=value;
             this.timestamp=timestamp;
         }
     }
-    HashMap<String, List<Node>> hmap;
+    HashMap<String, List<Node>> store;
     public TimeMap() {
-        hmap = new HashMap<>();
+        store = new HashMap<>();
     }
     
     public void set(String key, String value, int timestamp) {
-        Node node = new Node(value, timestamp);
-        if(!hmap.containsKey(key)){
-            hmap.put(key, new ArrayList<>());
-            hmap.get(key).add(node);
-            return;
-        }
-        List<Node> list = hmap.get(key);
-        list.add(node);
-        return;
+        store.computeIfAbsent(key, k-> new ArrayList<>()).add(new Node(key, value, timestamp));
     }
     
     public String get(String key, int timestamp) {
-        List<Node> list = hmap.get(key);
-        if(list==null || list.size()==0){
+        if(!store.containsKey(key)){
             return "";
         }
-        if(list.get(list.size()-1).timestamp<=timestamp){
-            return list.get(list.size()-1).value;
+        List<Node> list = store.get(key);
+        if(list==null || list.size()==0){
+            return "";
         }
         if(list.get(0).timestamp>timestamp){
             return "";
         }
+        if(list.get(list.size()-1).timestamp<timestamp){
+            return list.get(list.size()-1).value;
+        }
         int l=0, r=list.size()-1;
         while(l<r){
-            int mid = (int)Math.ceil((double)(l+r)/2);
-            if(list.get(mid).timestamp>timestamp){
+            int mid = (l+r+1)/2;
+            if(list.get(mid).timestamp > timestamp){
                 r=mid-1;
             }
             else{
