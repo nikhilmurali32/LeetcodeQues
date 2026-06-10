@@ -19,9 +19,9 @@ class Solution {
         if(root==null){
             return 0;
         }
-        max = Math.max(max, height(root.left) + height(root.right));
         diameterOfBinaryTree(root.left);
         diameterOfBinaryTree(root.right);
+        max = Math.max(max, height(root.left) + height(root.right));
         return max;
     }
     public int height(TreeNode root){
