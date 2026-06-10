@@ -19,22 +19,16 @@ class Solution {
         if(root==null){
             return 0;
         }
-        helper(root);
+        max = Math.max(max, height(root.left) + height(root.right));
+        diameterOfBinaryTree(root.left);
+        diameterOfBinaryTree(root.right);
         return max;
-    }
-    public int helper(TreeNode root){
-        if(root==null){
-            return 0;
-        }
-        int left_height=helper(root.left);
-        int right_height=helper(root.right);
-        max=Math.max(max, left_height + right_height);
-        return Math.max(left_height, right_height)+1;        
     }
     public int height(TreeNode root){
         if(root==null){
             return 0;
         }
-        return Math.max(height(root.left), height(root.right))+1;
+        return 1+Math.max(height(root.left), height(root.right));
     }
+
 }
