@@ -30,8 +30,6 @@ class Solution {
         String str2 = s2.toString();
         while(i<str1.length()-str2.length()+1){
             if(str1.charAt(i)==str2.charAt(0) && str1.charAt(i-1)=='.'){
-                // System.out.println(str1.substring(i, i+str2.length()-1));
-                // System.out.println(str2);
                 if(str1.substring(i, i+str2.length()).equals(str2)){
                     return true;
                 }
