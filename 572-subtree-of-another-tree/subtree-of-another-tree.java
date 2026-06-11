@@ -24,19 +24,9 @@ class Solution {
         if(s2.length()>s1.length()){
             return false;
         }
-        int i=1;
-        s2.deleteCharAt(0);
         String str1 = s1.toString();
         String str2 = s2.toString();
-        while(i<str1.length()-str2.length()+1){
-            if(str1.charAt(i)==str2.charAt(0) && str1.charAt(i-1)=='.'){
-                if(str1.substring(i, i+str2.length()).equals(str2)){
-                    return true;
-                }
-            }
-            i++;
-        }
-        return false;
+        return str1.contains(str2);
     }
     public void preOrder(TreeNode root, StringBuilder s){
         if(root==null){
