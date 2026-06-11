@@ -13,26 +13,41 @@
  *     }
  * }
  */
+ // .3.4.1##.2##.5##
+ // .4.1##.2##
 class Solution {
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if(root==null && subRoot==null){
-            return true;
-        }
-        if((root==null && subRoot!=null) || (root!=null && subRoot==null)){
+        StringBuilder s1 = new StringBuilder();
+        preOrder(root, s1);
+        StringBuilder s2 = new StringBuilder();
+        preOrder(subRoot, s2);
+        if(s2.length()>s1.length()){
             return false;
         }
-        if(isSameTree(root, subRoot)){
-            return true;
+        int i=1;
+        s2.deleteCharAt(0);
+        String str1 = s1.toString();
+        String str2 = s2.toString();
+        while(i<str1.length()-str2.length()+1){
+            if(str1.charAt(i)==str2.charAt(0) && str1.charAt(i-1)=='.'){
+                // System.out.println(str1.substring(i, i+str2.length()-1));
+                // System.out.println(str2);
+                if(str1.substring(i, i+str2.length()).equals(str2)){
+                    return true;
+                }
+            }
+            i++;
         }
-        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+        return false;
     }
-    public boolean isSameTree(TreeNode p, TreeNode q){
-        if(p==null && q==null){
-            return true;
+    public void preOrder(TreeNode root, StringBuilder s){
+        if(root==null){
+            s.append("#");
+            return;
         }
-        if((p==null && q!=null) || (p!=null && q==null) || (p.val != q.val)){
-            return false;
-        }
-        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);        
+        s.append(".");
+        s.append(root.val);
+        preOrder(root.left, s);
+        preOrder(root.right, s);
     }
 }
