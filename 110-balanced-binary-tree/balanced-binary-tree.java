@@ -27,7 +27,6 @@ class Solution {
         int rightDepth = depth(root.right);
         if(Math.abs(leftDepth-rightDepth)>1){
             ans=false;
-            return -1;
         }
         return 1+Math.max(leftDepth, rightDepth);
     }
