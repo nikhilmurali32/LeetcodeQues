@@ -23,17 +23,18 @@ class Solution {
         Queue<Task> waitingTasks = new LinkedList<>();
         int completedTasks=0;
         int totalTasks=maxFreq.size();
-        while(completedTasks < totalTasks){
-            while(!waitingTasks.isEmpty() && waitingTasks.peek().time<time){
+        while(!maxFreq.isEmpty() || completedTasks < totalTasks){
+            while(!waitingTasks.isEmpty() && waitingTasks.peek().time<=time){
                 maxFreq.add(waitingTasks.remove());
             }
             if(maxFreq.isEmpty()){
-                time++;
+                int currWaitTime = waitingTasks.peek().time;
+                time = currWaitTime;
                 continue;
             }
             Task currTask = maxFreq.remove();
             currTask.rem--;
-            currTask.time = time+n;
+            currTask.time = time+n+1;
             if(currTask.rem==0){
                 completedTasks++;
             }
