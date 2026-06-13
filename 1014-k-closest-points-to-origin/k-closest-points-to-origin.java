@@ -1,27 +1,30 @@
-class Node{
-    int[] point;
-    int dist;
-    Node(int[] point, int dist){
-        this.point=point;
-        this.dist=dist;
-    }
-}
 class Solution {
+    class Node{
+        int x, y;
+        double dist;
+        Node(int x, int y, double dist){
+            this.x=x;
+            this.y=y;
+            this.dist=dist;
+        }
+    }
     public int[][] kClosest(int[][] points, int k) {
-
-PriorityQueue<Node> pq = new PriorityQueue<>((a,b) -> a.dist-b.dist);
-for(int[] point:points){
-    int dist = (int)Math.pow(point[0],2)+ (int)Math.pow(point[1],2);
-    Node node = new Node(point, dist);
-    pq.add(node); 
-}
-int[][] res = new int[k][2];
-while(k>0){
-    Node n = pq.poll();
-    res[k-1][0] = n.point[0];
-    res[k-1][1] = n.point[1];
-    k--;
-}
-return res;
+        PriorityQueue<Node> closestPoints = new PriorityQueue<>((a,b) -> Double.compare(b.dist, a.dist));
+        for(int[] point:points){
+            Node node = new Node(point[0], point[1], Math.sqrt(point[0]*point[0] + point[1]*point[1]));
+            closestPoints.add(node);
+            if(closestPoints.size()>k){
+                closestPoints.remove();
+            }
+        }
+        int[][] res = new int[k][2];
+        int i=0;
+        while(!closestPoints.isEmpty() && i<k){
+            Node node = closestPoints.remove();
+            res[i][0] = node.x;
+            res[i][1] = node.y;
+            i++;
+        }
+        return res;
     }
 }
