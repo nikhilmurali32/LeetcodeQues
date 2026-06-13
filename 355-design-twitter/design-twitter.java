@@ -30,8 +30,9 @@ class Twitter {
         }
         PriorityQueue<List<Integer>> latestT = new PriorityQueue<>((a,b)->Integer.compare(a.get(1), b.get(1)));
         User user = users.get(userId);
-        for(List<Integer> tweet:user.tweets){
-            latestT.add(tweet);
+        List<List<Integer>> tweets = user.tweets;
+        for(int i=tweets.size()-1; i>=0 && i>=tweets.size()-11; i--){
+            latestT.add(tweets.get(i));
             if(latestT.size()>10){
                 latestT.remove();
             }
