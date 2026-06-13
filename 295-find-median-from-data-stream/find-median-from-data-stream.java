@@ -1,37 +1,29 @@
 class MedianFinder {
-    PriorityQueue<Integer> pq;
-    PriorityQueue<Integer> pq_rev;
+    PriorityQueue<Integer> leftHalf;
+    PriorityQueue<Integer> rightHalf;
     public MedianFinder() {
-        this.pq = new PriorityQueue<>();
-        this.pq_rev = new PriorityQueue<>((a,b)->(b-a));
+        leftHalf = new PriorityQueue<>((a,b)->Integer.compare(b,a));
+        rightHalf = new PriorityQueue<>();
     }
     
     public void addNum(int num) {
-        pq_rev.offer(num);
-        pq.offer(pq_rev.poll());
-        if(pq.size()>pq_rev.size()){
-            pq_rev.offer(pq.poll());
+        leftHalf.add(num);
+        if(rightHalf.size()<leftHalf.size()){
+            rightHalf.add(leftHalf.remove());
+        }
+        else{
+            leftHalf.add(rightHalf.remove());
+            rightHalf.add(leftHalf.remove());
         }
     }
     
     public double findMedian() {
-        double ans=0;
-        int n=pq_rev.size()+pq.size();
-        // List<Integer> list = new ArrayList<>();
-        // if(pq.peek()==null || pq_rev.peek()==null){
-        //     return (double)pq_rev.peek();
-        // }
-        System.out.println(n);
-        if(n%2==0){
-            if(pq.peek()==null){
-                return (double)pq_rev.peek();
-            }
-            ans=((double)pq.peek() + (double)pq_rev.peek())/2;
+        int size = leftHalf.size()+rightHalf.size();
+        if(size%2==0){
+            double sum = leftHalf.peek()+rightHalf.peek();
+            return sum/2;
         }
-        else{
-            ans=(double)pq_rev.peek();
-        }
-        return ans;
+        return (double)rightHalf.peek();
     }
 }
 
