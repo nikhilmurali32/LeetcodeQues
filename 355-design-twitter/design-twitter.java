@@ -39,8 +39,9 @@ class Twitter {
         }
         for(int f:user.following){
             User user1 = users.get(f);
-            for(List<Integer> tweet:user1.tweets){
-                latestT.add(tweet);
+            List<List<Integer>> tweets1 = user1.tweets;
+            for(int i=tweets1.size()-1; i>=0 && i>=tweets1.size()-11; i--){
+                latestT.add(tweets1.get(i));
                 if(latestT.size()>10){
                     latestT.remove();
                 }
