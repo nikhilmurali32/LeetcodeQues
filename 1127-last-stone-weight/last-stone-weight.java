@@ -8,7 +8,7 @@ class Solution {
             int first = largestStones.remove();
             int second = largestStones.remove();
             if(first!=second){
-                largestStones.add(Math.abs(first-second));
+                largestStones.add(first-second);
             }
         }
         return largestStones.isEmpty()?0:largestStones.remove();
