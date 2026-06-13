@@ -1,17 +1,17 @@
 class Solution {
     class Node{
         int x, y;
-        double dist;
-        Node(int x, int y, double dist){
+        int dist;
+        Node(int x, int y, int dist){
             this.x=x;
             this.y=y;
             this.dist=dist;
         }
     }
     public int[][] kClosest(int[][] points, int k) {
-        PriorityQueue<Node> closestPoints = new PriorityQueue<>((a,b) -> Double.compare(b.dist, a.dist));
+        PriorityQueue<Node> closestPoints = new PriorityQueue<>((a,b) -> Integer.compare(b.dist, a.dist));
         for(int[] point:points){
-            Node node = new Node(point[0], point[1], Math.sqrt(point[0]*point[0] + point[1]*point[1]));
+            Node node = new Node(point[0], point[1], point[0]*point[0] + point[1]*point[1]);
             closestPoints.add(node);
             if(closestPoints.size()>k){
                 closestPoints.remove();
