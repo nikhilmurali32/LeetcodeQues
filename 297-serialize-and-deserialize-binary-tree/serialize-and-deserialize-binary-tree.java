@@ -11,48 +11,66 @@ public class Codec {
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        if(root==null){
-            return "";
-        }
-        Queue<TreeNode> q = new LinkedList<>();
+        Queue<TreeNode> nodes = new LinkedList<>();
+        nodes.add(root);
         StringBuilder sb = new StringBuilder();
-        q.add(root);
-        while(!q.isEmpty()){
-            TreeNode node=q.poll();
-            if(node==null){
-                sb.append("N,");
-            }
-            else{
-                sb.append(node.val).append(",");
-                q.add(node.left);
-                q.add(node.right);
+        if(root==null){
+            return sb.toString();
+        }
+        sb.append(root.val).append(",");
+        while(!nodes.isEmpty()){
+            int size = nodes.size();
+            for(int i=0; i<size; i++){
+                TreeNode currNode = nodes.remove();
+                if(currNode.left==null){
+                    sb.append(".").append(",");
+                }
+                else{
+                    sb.append(currNode.left.val).append(",");
+                    nodes.add(currNode.left);
+                }
+                if(currNode.right==null){
+                    sb.append(".").append(",");
+                }
+                else{
+                    sb.append(currNode.right.val).append(",");
+                    nodes.add(currNode.right);
+                }
             }
         }
+        System.out.println(sb.toString());
         return sb.toString();
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        if(data.isEmpty()){
+        if(data.length()==0){
             return null;
         }
-        String[] vals = data.split(",");
-        Queue<TreeNode> q = new LinkedList<>();
-        TreeNode root = new TreeNode(Integer.parseInt(vals[0]));
-        q.add(root);
-        int i=1;
-        while(!q.isEmpty()){
-            TreeNode node = q.poll();
-            if(!vals[i].equals("N")){
-                node.left=new TreeNode(Integer.parseInt(vals[i]));
-                q.add(node.left);
+        String[] strArr = data.split(",");
+        Queue<TreeNode> nodes = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.valueOf(strArr[0]));
+        nodes.add(root);
+        int k=1;
+        while(!nodes.isEmpty() && k<strArr.length){
+            int size = nodes.size();
+            int i=0;
+            while(i<size){
+                TreeNode currNode = nodes.remove();
+                if(!strArr[k].equals(".")){
+                    TreeNode node = new TreeNode(Integer.valueOf(strArr[k]));
+                    currNode.left = node;
+                    nodes.add(node);
+                }
+                k++;
+                if(!strArr[k].equals(".")){
+                    TreeNode node = new TreeNode(Integer.valueOf(strArr[k]));
+                    currNode.right = node;
+                    nodes.add(node);
+                }
+                k++;
+                i++;
             }
-            i++;
-            if(!vals[i].equals("N")){
-                node.right=new TreeNode(Integer.parseInt(vals[i]));
-                q.add(node.right);
-            }
-            i++;
         }
         return root;
     }
