@@ -1,42 +1,36 @@
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
-        int n=gas.length;
-        int[] diff = new int[n];
-        int tot=0;
-        for(int i=0; i<n; i++){
-            diff[i]=gas[i]-cost[i];
-            tot += diff[i];
-        }
-        if(tot<0){
-            return -1;
-        }
+        int n = gas.length;
         int i=0;
-        if(n==1){
-            if(diff[0]>=0){
-                return 0;
-            }
-            return -1;
-        }
         while(i<n){
-            if(diff[i]>0){
-                if(isPossible(i, diff)){
-                    return i;
-                }
+            if(gas[i]<cost[i]){
+                i++;
+                continue;
             }
-            i++;
+            if(checkComplete(i, gas, cost, 0)==i){
+                return i;
+            }
+            else{
+                if(checkComplete(i, gas, cost, 0)<i){
+                    return -1;
+                }
+                i=checkComplete(i, gas, cost, 0);
+            }
         }
         return -1;
     }
-    public boolean isPossible(int i, int[] diff){
-        int count=0, sum=0, n=diff.length;
-        while(count!=n){
-            sum += diff[(i+n)%n];
-            if(sum<0){
-                return false;
+    public int checkComplete(int i, int[] gas, int[] cost, int remGas){
+        int startInd=i;
+        int n=gas.length;
+        remGas = gas[i]-cost[i];
+        i = (i+1)%n;
+        while(i != startInd){
+            remGas += (gas[i]-cost[i]);
+            if(remGas<0){
+                return i;
             }
-            count++;
-            i++;
+            i = (i+1)%n;
         }
-        return true;
+        return i;
     }
 }
