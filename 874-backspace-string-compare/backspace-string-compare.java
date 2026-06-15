@@ -1,7 +1,7 @@
 class Solution {
     public boolean backspaceCompare(String s, String t) {
         int i=s.length()-1, j=t.length()-1;
-        while(true){
+        while(i>=0 || j>=0){
             int count = 0;
             while(i>=0 && (s.charAt(i)=='#' || count>0)){
                 if(s.charAt(i)=='#'){
