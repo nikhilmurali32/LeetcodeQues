@@ -1,17 +1,18 @@
 class Solution {
     public boolean canJump(int[] nums) {
-        int n=nums.length;
-        if(n==1){
-            return true;
-        }
-        boolean[] dp = new boolean[n];
-        int max_ind=0;
+        int farthest=0;
+        int n=nums.length-1;
         for(int i=0; i<n; i++){
-            if(nums[i]==0 && i>=max_ind && i!=n-1){
-                return false;
+            if(i<=farthest){
+                farthest = Math.max(farthest, i+nums[i]);
+                if(farthest>=n){
+                    break;
+                }
             }
-            max_ind=Math.max(max_ind, i+nums[i]);
+            else{
+                break;
+            }
         }
-        return max_ind>=n-1;
+        return farthest>=n;
     }
 }
