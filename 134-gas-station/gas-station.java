@@ -15,14 +15,12 @@ class Solution {
                 i++;
                 continue;
             }
-            if(checkComplete(i, gas, cost, 0)==i){
+            int x=checkComplete(i, gas, cost, 0);
+            if(x==i){
                 return i;
             }
             else{
-                if(checkComplete(i, gas, cost, 0)<i){
-                    return -1;
-                }
-                i=checkComplete(i, gas, cost, 0);
+                i=x;
             }
         }
         return -1;
