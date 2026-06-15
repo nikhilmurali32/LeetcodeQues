@@ -1,6 +1,14 @@
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int n = gas.length;
+        int totalGas=0, totalCost=0;
+        for(int i=0; i<n; i++){
+            totalGas += gas[i];
+            totalCost += cost[i];
+        }
+        if(totalCost>totalGas){
+            return -1;
+        }
         int i=0;
         while(i<n){
             if(gas[i]<cost[i]){
