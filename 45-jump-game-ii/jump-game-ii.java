@@ -1,29 +1,19 @@
 class Solution {
     public int jump(int[] nums) {
-        int[] dp = new int[nums.length];
-        Arrays.fill(dp, Integer.MAX_VALUE);
-        // dp[0]=0;
-        return countMinJumps(nums, 0, nums.length, dp);
-    }
-    public int countMinJumps(int[] nums, int index, int n, int[] dp){
-        if(index>n-1){
-            return 100000;
-        }
-        if(index==n-1){
+        int currStart=0, currEnd=0, jump=0, farthest=0, n=nums.length;
+        if(n==1){
             return 0;
         }
-        int minJumps = 100000;
-        for(int i=1; i<=nums[index]; i++){
-            if(index+i > n-1){
-                break;
-            }
-            if(dp[index+i] != Integer.MAX_VALUE){
-                minJumps = Math.min(minJumps, 1+dp[index+i]);
-            }
-            else{
-                minJumps = Math.min(minJumps, 1+countMinJumps(nums, index+i, n, dp));
+        for(int i=0; i<n; i++){
+            farthest = Math.max(farthest, i+nums[i]);
+            if(i==currEnd){
+                jump++;
+                currEnd=farthest;
+                if(currEnd >= n-1){
+                    return jump;
+                }
             }
         }
-        return dp[index] = minJumps;
+        return jump;
     }
 }
