@@ -1,29 +1,42 @@
+// class Solution {
+//     public int maxProduct(int[] nums) {
+//         int negProd = 1;
+//         int currProd = 1;
+//         int maxProd = Integer.MIN_VALUE;
+//         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+//         for(int num:nums){
+//             currProd *= num;
+//             if(currProd<0){
+//                 if(!minHeap.isEmpty()){
+//                     maxProd = Math.max(maxProd, currProd/minHeap.peek());
+//                 }
+//                 minHeap.add(currProd);
+//             }
+//         }
+//         return maxProd;
+//     }
+// }
 class Solution {
     public int maxProduct(int[] nums) {
-        int prod=1;
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> (b-a));
-        int max=Integer.MIN_VALUE;
+        int negProd = 1;
+        int currProd = 1;
+        int maxProd = Integer.MIN_VALUE;
         for(int num:nums){
-            prod *= num;
-            if(prod<0){
-                if(!pq.isEmpty()){
-                    int top=pq.peek();
-                    max = Math.max(max, (int)prod/top);
-                    continue;
+            currProd *= num;
+            maxProd = Math.max(maxProd, currProd);
+            if(currProd<0){
+                if(negProd==1){
+                    negProd = currProd;
                 }
-                pq.offer(prod);
-                max = Math.max(max, prod);
+                else{
+                    maxProd = Math.max(maxProd, currProd/negProd);
+                }
             }
-            else if(prod==0){
-                max=Math.max(max, prod);
-                pq.clear();
-                prod=1;
-                continue;
-            }
-            else{
-                max=Math.max(max, prod);
+            else if(currProd==0){
+                negProd=1;
+                currProd=1;
             }
         }
-        return max;
+        return maxProd;
     }
 }
