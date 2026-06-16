@@ -1,25 +1,21 @@
 class Solution {
     public boolean isNStraightHand(int[] hand, int groupSize) {
-        int n = hand.length;
-        if(n%groupSize != 0){
+        if(hand.length%groupSize != 0){
             return false;
         }
-        TreeMap<Integer, Integer> tmap = new TreeMap<>();
+        TreeMap<Integer, Integer> freq = new TreeMap<>();
         for(int h:hand){
-            tmap.put(h, tmap.getOrDefault(h,0)+1);
+            freq.put(h, freq.getOrDefault(h,0)+1);
         }
-        while(!tmap.isEmpty()){
-            int first = tmap.firstKey();
+        while(!freq.isEmpty()){
+            int first=freq.firstKey();
             for(int i=first; i<first+groupSize; i++){
-                if(!tmap.containsKey(i)){
+                if(!freq.containsKey(i)){
                     return false;
                 }
-                int count=tmap.get(i);
-                if(count==1){
-                    tmap.remove(i);
-                }
-                else{
-                    tmap.put(i, count-1);
+                freq.put(i, freq.get(i)-1);
+                if(freq.get(i)==0){
+                    freq.remove(i);
                 }
             }
         }
