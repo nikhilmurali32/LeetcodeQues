@@ -6,7 +6,7 @@ class Solution {
         return res;
     }
     public void findCombinations(int[] nums, List<Integer> list, int ind, int rem, List<List<Integer>> res){
-        if(rem<0){
+        if(ind==nums.length || rem<0){
             return;
         }
         if(rem==0){
