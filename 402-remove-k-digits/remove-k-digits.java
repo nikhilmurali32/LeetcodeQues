@@ -18,13 +18,13 @@ class Solution {
         while(!ans.isEmpty()){
             sb.append(ans.removeLast());
         }
-        sb.reverse();
-        while(sb.length()>0 && sb.charAt(0)=='0'){
-            sb.deleteCharAt(0);
+        while(sb.length()>0 && sb.charAt(sb.length()-1)=='0'){
+            sb.deleteCharAt(sb.length()-1);
         }
         if(sb.length()==0){
             return "0";
         }
+        sb.reverse();
         return sb.toString();
     }
 }
