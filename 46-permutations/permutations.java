@@ -1,7 +1,6 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        Arrays.sort(nums);
         findCombinations(nums, new ArrayList<>(), res);
         return res;    
     }
