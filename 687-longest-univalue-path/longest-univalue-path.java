@@ -14,27 +14,33 @@
  * }
  */
 class Solution {
-    int gmax=0;
+    int max=0;
     public int longestUnivaluePath(TreeNode root) {
-        findPath(root);
-        return gmax;
+        travel(root);
+        return max;
     }
-    public int findPath(TreeNode root){
+    public int travel(TreeNode root){
         if(root==null){
             return 0;
         }
-        int leftMax = findPath(root.left);
-        int rightMax = findPath(root.right);
-
-        int leftExt = 0, rightExt=0;
-
+        if(root.left==null && root.right==null){
+            return 0;
+        }
+        int leftVal = travel(root.left);
+        int rightVal = travel(root.right);
         if(root.left!=null && root.left.val==root.val){
-            leftExt = leftMax+1;
+            leftVal++;
+        }
+        else{
+            leftVal=0;
         }
         if(root.right!=null && root.right.val==root.val){
-            rightExt = rightMax+1;
+            rightVal++;
         }
-        gmax = Math.max(gmax, leftExt+rightExt);
-        return Math.max(leftExt, rightExt);
+        else{
+            rightVal=0;
+        }
+        max = Math.max(max, leftVal+rightVal);
+        return Math.max(leftVal, rightVal);
     }
 }
