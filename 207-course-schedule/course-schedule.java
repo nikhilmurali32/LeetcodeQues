@@ -1,34 +1,31 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<List<Integer>> adjList = new ArrayList<>(numCourses);
-        for (int i = 0; i < numCourses; i++) {
+        List<List<Integer>> adjList = new ArrayList<>();
+        for(int i=0; i<numCourses; i++){
             adjList.add(new ArrayList<>());
         }
+        int[] indegrees = new int[numCourses];
         for(int[] pre:prerequisites){
             adjList.get(pre[1]).add(pre[0]);
+            indegrees[pre[0]]++;
         }
-        int[] state = new int[numCourses];
-        for(int i=0; i<numCourses; i++){
-            if(isCycle(i, adjList, state)){
-                return false;
+        Queue<Integer> q = new LinkedList<>();
+        for(int i=0; i<indegrees.length; i++){
+            if(indegrees[i]==0){
+                q.add(i);
             }
         }
-        return true;
-    }
-    public boolean isCycle(int course, List<List<Integer>> adjList, int[] state){
-        if(state[course]==1){
-            return true;
-        }
-        if(state[course]==2){
-            return false;
-        }
-        state[course]=1;
-        for(int i:adjList.get(course)){
-            if(isCycle(i, adjList, state)){
-                return true;
+        int tot=0;
+        while(!q.isEmpty()){
+            int curr = q.remove();
+            tot++;
+            for(int course:adjList.get(curr)){
+                indegrees[course]--;
+                if(indegrees[course]==0){
+                    q.add(course);
+                }
             }
         }
-        state[course]=2;
-        return false;
+        return tot==numCourses;
     }
 }
