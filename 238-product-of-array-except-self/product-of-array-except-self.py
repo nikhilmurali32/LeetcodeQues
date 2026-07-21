@@ -3,11 +3,11 @@ class Solution:
         n=len(nums)
         prod=[1]*n
         prev=nums[0]
-        for i, num in enumerate(nums):
+        for i in range(n):
             if i==0:
                 continue
             prod[i] = prod[i-1]*prev
-            prev=num
+            prev=nums[i]
         prev=1
         for i in range(n-1, -1, -1):
             if i==n-1:
