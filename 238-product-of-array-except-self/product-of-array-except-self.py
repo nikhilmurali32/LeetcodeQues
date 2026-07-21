@@ -8,12 +8,10 @@ class Solution:
                 continue
             prod[i] = prod[i-1]*prev
             prev=num
-        prev=nums[n-1]
-        prodR=[1]*n
+        suff=1
         for i in range(n-1, -1, -1):
             if i==n-1:
                 continue
-            prodR[i] = prodR[i+1]*prev
-            prod[i] *= prodR[i]
-            prev=nums[i]
+            suff *= nums[i+1]
+            prod[i] *= suff
         return prod
