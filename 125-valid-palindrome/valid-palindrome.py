@@ -1,13 +1,14 @@
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        finalStr = ""
-        for ch in s:
-            if (ch>='a' and ch<='z') or (ch>='A' and ch<='Z') or (ch>='0' and ch<='9'):
-                finalStr += ch
-        res = finalStr.lower()
-        return self.isPal(res)
-    def isPal(self, res:str) -> bool:
-        for i in range((len(res)//2)):
-            if res[i] != res[len(res)-i-1]:
+        l=0
+        r=len(s)-1
+        while l<r:
+            while l<r and not ((s[l]>='a' and s[l]<='z') or (s[l]>='A' and s[l]<='Z') or (s[l]>='0' and s[l]<='9')):
+                l += 1
+            while l<r and not ((s[r]>='a' and s[r]<='z') or (s[r]>='A' and s[r]<='Z') or (s[r]>='0' and s[r]<='9')):
+                r -= 1
+            if s[l].lower() != s[r].lower():
                 return False
+            l += 1
+            r -= 1
         return True
