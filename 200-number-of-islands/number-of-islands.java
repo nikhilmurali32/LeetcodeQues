@@ -5,7 +5,7 @@ class Solution {
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
                 if(grid[i][j]=='1'){
-                    dfs(grid, i, j, m, n);
+                    bfs(grid, i, j, m, n);
                     count++;
                 }
             }
@@ -21,5 +21,24 @@ class Solution {
         dfs(grid, i, j-1, m , n);
         dfs(grid, i, j+1, m , n);
         dfs(grid, i-1, j, m , n);
+    }
+    public void bfs(char[][] grid, int i, int j, int m, int n){
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{i,j});
+        int[][] dirs = {{0,1}, {0,-1}, {1,0}, {-1,0}};
+        while(!q.isEmpty()){
+            int[] cell = q.remove();
+            for(int[] dir:dirs){
+                int x=cell[0]+dir[0], y=cell[1]+dir[1];
+                if(x<0 || x>=m || y<0 || y>=n){
+                    continue;
+                }
+                if(grid[x][y]=='1'){
+                    q.add(new int[]{x, y});
+                    grid[x][y]='0';
+                }
+            }
+        }
+        return;
     }
 }
