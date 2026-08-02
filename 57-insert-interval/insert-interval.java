@@ -1,50 +1,62 @@
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
+        if(intervals.length==0){
+            return new int[][]{newInterval};
+        }
         List<int[]> list = new ArrayList<>();
-        boolean merged=false;
+        int[] arr = new int[2];
+        boolean merged=false, added=false;
+        int count=0;
         for(int[] interval:intervals){
-            if(!merged){
-                if(newInterval[0]>=interval[0] && newInterval[1]<=interval[1]){
-                    list.add(interval);
-                    merged=true;
-                    continue;
+            if(merged){
+                if(added){
+                    if(arr[1]<interval[0]){
+                        list.add(new int[]{arr[0], arr[1]});
+                        added=false;
+                    }
+                    else{
+                        arr[1] = Math.max(arr[1], interval[1]);
+                        count++;
+                        continue;
+                    }
                 }
-                else if(newInterval[0]<interval[0] && newInterval[1]<interval[0]){
-                    list.add(newInterval);
-                    list.add(interval);
-                    merged=true;
-                    continue;
-                }
-                if(interval[1]<newInterval[0]){
-                    list.add(interval);
-                }
-                else{
-                    list.add(new int[]{Math.min(interval[0], newInterval[0]), Math.max(interval[1], newInterval[1])});
-                    merged=true;
-                }
+                list.add(interval);
+                count++;
+                continue;
+            }
+            if(newInterval[0]>interval[1]){
+                list.add(interval);
+                count++;
+                continue;
+            }
+            if(newInterval[0]>=interval[0] && newInterval[1]<=interval[1]){
+                list.add(interval);
+                merged=true;
+                count++;
+                continue;
+            }
+            else if(newInterval[1]<interval[0]){
+                list.add(newInterval);
+                list.add(interval);
+                merged=true;
+                count++;
+                continue;
             }
             else{
-                int[] lastInt = list.get(list.size()-1);
-                if(lastInt[0]<=interval[0] && lastInt[1]>=interval[1]){
-                    continue;
-                }
-                if(interval[0]>lastInt[1]){
-                    list.add(interval);
-                }
-                else{
-                    list.add(new int[]{Math.min(interval[0], lastInt[0]), Math.max(interval[1], lastInt[1])});
-                    list.remove(list.size()-2);
-                }                
+                arr[0] = Math.min(interval[0], newInterval[0]);
+                arr[1] = Math.max(newInterval[1], interval[1]);
+                merged=true;
+                added=true;
+                count++;
             }
-
         }
-        if(list.size()==0 || !merged){
+        if(added){
+            list.add(arr);
+        }
+        if(!merged){
             list.add(newInterval);
         }
-        int[][] res = new int[list.size()][2];
-        for(int i=0; i<res.length; i++){
-            res[i]=list.get(i);
-        }
+        int[][] res = list.toArray(new int[list.size()][]);
         return res;
     }
 }
