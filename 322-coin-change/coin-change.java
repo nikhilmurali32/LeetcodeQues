@@ -1,19 +1,27 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
-        int[] dp = new int[amount+1];
-        for(int j=1; j<=amount; j++){
-            dp[j] = 100000;
+        int[][] dp = new int[coins.length+1][amount+1];
+        for(int[] arr:dp){
+            Arrays.fill(arr,-1);
         }
-        for(int i=1; i<=coins.length; i++){
-            for(int j=1; j<=amount; j++){
-                if(coins[i-1]<=j){
-                    dp[j] = Math.min(dp[j], 1 + dp[j-coins[i-1]]);
-                }
-                else{
-                    dp[j] = dp[j];
-                }
-            }
+        int res = helper(coins, amount, 0, dp);
+        return res==100000?-1:res;
+    }
+    public int helper(int[] coins, int amount, int ind, int[][] dp){
+        if(amount==0){
+            return dp[ind][amount]=0;
         }
-        return dp[amount]==100000?-1:dp[amount];
+        if(ind>=coins.length){
+            return dp[ind][amount]=100000;
+        }
+        if(dp[ind][amount]!=-1){
+            return dp[ind][amount];
+        }
+        int take=100000;
+        int doNotTake = helper(coins, amount, ind+1, dp);
+        if(amount>=coins[ind]){
+            take = 1+helper(coins, amount-coins[ind], ind, dp);
+        }
+        return dp[ind][amount]=Math.min(doNotTake,take);
     }
 }
