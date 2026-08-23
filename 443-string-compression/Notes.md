@@ -1,1 +1,1 @@
-<h2>string-compression Notes</h2><hr>[ Time taken: 3 d 12 hrs 37 m 43 s ]
+<h2>string-compression Notes</h2><hr>[ Time taken: 1d 17hrs 58m 50s ]
